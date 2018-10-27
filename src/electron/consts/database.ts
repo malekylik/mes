@@ -5,3 +5,7 @@ export {
     SERVER_URL,
     DB_NAME,
 }
+
+export enum COLLECTIONS {
+    Patients = 'users',
+}

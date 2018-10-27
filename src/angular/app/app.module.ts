@@ -11,8 +11,8 @@ import { PatientListModule } from './modules/patient-list/patient-list.module';
   ],
   imports: [
     BrowserModule,
+    PatientListModule,
     NgxElectronModule,
-    PatientListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

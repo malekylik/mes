@@ -1,8 +1,9 @@
 import * as url from 'url';
 
-import { app, BrowserWindow } from 'electron'; 
+import { app, BrowserWindow, ipcMain } from 'electron'; 
 
 import { Database } from './database/Database';
+import { PatientsApi } from './database/PatientsApi';
 
 let win: Electron.BrowserWindow;
 
