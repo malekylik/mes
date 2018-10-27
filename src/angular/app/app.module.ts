@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { NgxElectronModule } from 'ngx-electron';
 
 import { AppComponent } from './app.component';
+import { PatientListModule } from './modules/patient-list/patient-list.module';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    NgxElectronModule
+    NgxElectronModule,
+    PatientListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
