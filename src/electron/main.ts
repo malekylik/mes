@@ -2,8 +2,6 @@ import * as url from 'url';
 
 import { app, BrowserWindow } from 'electron'; 
 
-import { Db, Cursor } from 'mongodb';
-
 import { Database } from './database/Database';
 
 let win: Electron.BrowserWindow;

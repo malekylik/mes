@@ -1,7 +1,6 @@
 import { MongoClient, Db } from 'mongodb';
-import { Observable, of, Observer } from 'rxjs';
 
-const { SERVER_URL, DB_NAME } = require('../consts/database');
+import { SERVER_URL, DB_NAME } from '../consts/database';
 
 export class Database {
     private static db: Db;
@@ -9,14 +8,12 @@ export class Database {
 
     private constructor() {}
 
-    static async connectDb(): Promise<Db>  {
-        Database.mongoClient = await MongoClient.connect(`mongodb://${SERVER_URL}`, { useNewUrlParser: true })
-        Database.db = Database.mongoClient.db(DB_NAME);
+    static async getDB(): Promise<Db> {
+        if (!this.isConnected()) {
+            Database.mongoClient = await MongoClient.connect(`mongodb://${SERVER_URL}`, { useNewUrlParser: true })
+            Database.db = Database.mongoClient.db(DB_NAME);
+        }
 
-        return Database.db;
-    }
-
-    static getDB(): Db {
         return Database.db;
     }
 
