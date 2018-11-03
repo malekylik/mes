@@ -10,4 +10,10 @@ export class RulesApi {
                 .collection(COLLECTIONS.Rules)
                 .find(filterQuery);
     }
+
+    static async getCount(): Promise<number> {
+        return (await Database.getDB())
+                .collection(COLLECTIONS.Rules)
+                .countDocuments();
+    }
 } 
