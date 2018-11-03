@@ -1,0 +1,7 @@
+<span>Правила:</span>
+<mat-list>
+  <ng-template ngFor let-rule [ngForOf]="rules">
+    <a mat-list-item href="#"> {{rule.name}} </a>
+    <mat-divider></mat-divider>
+  </ng-template>
+</mat-list>

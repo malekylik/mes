@@ -4,7 +4,7 @@ import { MatListModule } from '@angular/material/list';
 
 import { SharedModule } from '../shared/shared.module';
 import { ListComponent } from './components/list/list.component';
-import { PatientsListService } from './services/patients-list/patients-list.service';
+import { RulesListService } from './services/rules-list/rules-list.service';
 
 @NgModule({
   imports: [
@@ -13,11 +13,11 @@ import { PatientsListService } from './services/patients-list/patients-list.serv
     MatListModule,
   ],
   providers: [
-    PatientsListService
+    RulesListService
   ],
   declarations: [ListComponent],
   exports: [
     ListComponent,
   ]
 })
-export class PatientListModule { }
+export class RulesListModule { }

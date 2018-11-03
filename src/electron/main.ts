@@ -1,9 +1,8 @@
 import * as url from 'url';
 
-import { app, BrowserWindow, ipcMain } from 'electron'; 
+import { app, BrowserWindow } from 'electron'; 
 
 import { Database } from './database/Database';
-import { PatientsApi } from './database/PatientsApi';
 
 let win: Electron.BrowserWindow;
 
@@ -40,7 +39,6 @@ async function createWindow () {
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
-
   if (process.platform !== 'darwin') {
     app.quit()
   }

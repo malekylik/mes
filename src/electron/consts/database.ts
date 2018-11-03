@@ -1,5 +1,5 @@
 const SERVER_URL = 'localhost:27017';
-const DB_NAME = 'tutorial';
+const DB_NAME = 'mes';
 
 export {
     SERVER_URL,
@@ -7,5 +7,5 @@ export {
 }
 
 export enum COLLECTIONS {
-    Patients = 'users',
+    Rules = 'rules',
 }
