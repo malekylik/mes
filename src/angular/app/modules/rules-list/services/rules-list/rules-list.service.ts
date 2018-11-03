@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
-import { Observable, Observer } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { Cursor, FilterQuery } from 'mongodb';
 
 import { Rule } from '../../../../../../electron/interfaces/rule';
@@ -16,20 +16,27 @@ export class RulesListService {
     this.rulesApi = this.electronService.remote.require('./database/RulesApi').RulesApi;
   }
 
-  getRules(filterQuery?: FilterQuery<any>): Observable<Array<Rule>> {
-    const rules: Promise<Cursor<Rule>> = this.rulesApi.getRules(filterQuery);
-    
-    return Observable.create((o: Observer<Array<Rule>>) => {
-      rules.then(async (cursor: Cursor<Rule>) => {
-        const rulesPromises: Array<Promise<Rule>> = [];
+  loadRules(filterQuery?: FilterQuery<any>): Observable<Cursor<Rule>> {
+    return from(this.rulesApi.getRules(filterQuery));
+  }
 
-        while (await cursor.hasNext()) rulesPromises.push(cursor.next());
+  getRules(skip: number = 0, limit: number = 0, filterQuery?: FilterQuery<any>): Observable<Array<Rule>> {
+    return from(
+      new Promise(async (resolve) => {
+        const limitedCursor: Cursor<Rule> = (await this.rulesApi.getRules(filterQuery))
+        .skip(skip)
+        .limit(limit);
+  
+        const rulesPromises: Promise<Rule>[] = [];
+  
+        while (await limitedCursor.hasNext()) rulesPromises.push(limitedCursor.next());
+  
+        resolve(await Promise.all(rulesPromises));
+      })
+    );
+  }
 
-        o.next(await Promise.all(rulesPromises));
-        o.complete();
-      });
-
-      rules.catch((err) => { o.error(err) });
-    });
+  getCount(): Observable<number> {
+    return from(this.rulesApi.getCount());
   }
 }

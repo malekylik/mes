@@ -7,7 +7,7 @@ import { RulesListModule } from './modules/rules-list/rules-list.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
