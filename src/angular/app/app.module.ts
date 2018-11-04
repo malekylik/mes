@@ -3,14 +3,16 @@ import { NgModule } from '@angular/core';
 import { NgxElectronModule } from 'ngx-electron';
 
 import { AppComponent } from './app.component';
+import { RulesListModule } from './modules/rules-list/rules-list.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
-    NgxElectronModule
+    RulesListModule,
+    NgxElectronModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

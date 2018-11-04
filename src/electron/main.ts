@@ -1,9 +1,12 @@
-const { app, BrowserWindow } = require('electron');
-const url = require('url');
+import * as url from 'url';
+
+import { app, BrowserWindow } from 'electron'; 
+
+import { Database } from './database/Database';
 
 let win: Electron.BrowserWindow;
 
-function createWindow () {
+async function createWindow () {
   win = new BrowserWindow({
     width: 1300, 
     height: 600,
@@ -36,7 +39,6 @@ function createWindow () {
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
-
   if (process.platform !== 'darwin') {
     app.quit()
   }
@@ -48,4 +50,8 @@ app.on('activate', () => {
   }
 });
 
-
+process.on('exit', () => {
+  if (Database.isConnected()) {
+    Database.close();
+  }
+});
