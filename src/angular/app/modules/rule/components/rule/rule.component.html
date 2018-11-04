@@ -1,3 +1,52 @@
-<p>
-  rule works!
-</p>
+<form>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Имя" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Возраст" required>
+      <mat-option *ngFor="let age of ages" [value]="age.value">
+        {{age.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Температура" required>
+      <mat-option *ngFor="let T of Ts" [value]="T.value">
+        {{T.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Лейкоцитоз" required>
+      <mat-option *ngFor="let L of Ls" [value]="L.value">
+        {{L.viewValue}}
+      </mat-option>
+    </mat-select>
+    <mat-hint>10^9</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Время от начала заболевания" required>
+      <mat-option *ngFor="let t of ts" [value]="t.value">
+        {{t.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="number" min="0" placeholder="Нейтрофилез" required>
+    <mat-hint>в %</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="number" min="0" placeholder="Лимфоцитоз" required>
+    <mat-hint>в %</mat-hint>
+  </mat-form-field>
+
+
+  <button mat-raised-button>Сохранить</button>
+  <button mat-raised-button>Отмена</button>
+</form>

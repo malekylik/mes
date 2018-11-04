@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
@@ -14,7 +13,6 @@ import { RulesListPageComponent } from './components/rules-list-page/rules-list-
   imports: [
     CommonModule,
     SharedModule,
-    MatListModule,
     RuleModule,
     RouterModule.forChild(ROUTES)
   ],
