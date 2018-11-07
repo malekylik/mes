@@ -4,9 +4,7 @@ import { Observable, from } from 'rxjs';
 
 import { Rule } from '../../../../../../electron/interfaces/Rule';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class RuleService {
 
   private ruleApi;
@@ -14,10 +12,14 @@ export class RuleService {
   constructor(
     private electronService: ElectronService
   ) { 
-    this.ruleApi = this.electronService.remote.require('./database/RulesApi').RulesApi;
+    this.ruleApi = this.electronService.remote.require('./database/RuleApi').RuleApi;
   }
 
   updateRule(rule: Rule): Observable<void> {
+    // if (rule._id) {
+    //   return from(this.ruleApi.)
+    // }
+
     return from(this.ruleApi.insertRule(rule));
   }
 }
