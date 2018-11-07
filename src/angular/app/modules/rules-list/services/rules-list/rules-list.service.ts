@@ -14,6 +14,7 @@ export class RulesListService {
     private electronService: ElectronService
   ) { 
     this.rulesApi = this.electronService.remote.require('./database/RulesApi').RulesApi;
+    console.log(this.rulesApi);
   }
 
   loadRules(filterQuery?: FilterQuery<any>): Observable<Cursor<Rule>> {
