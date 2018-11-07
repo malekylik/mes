@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AmountComponent } from './components/amount/amount.component';
 
@@ -21,6 +22,8 @@ import { AmountComponent } from './components/amount/amount.component';
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   declarations: [AmountComponent]
 })

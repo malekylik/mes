@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-rule',
@@ -81,11 +82,34 @@ export class RuleComponent implements OnInit {
       viewValue: 'от 25',
       value: '> 24'
     },
-  ]
+  ];
 
-  constructor() { }
+  rule = this.fb.group({
+    name: [''],
+    age: [this.ages[0].value],
+    T: [this.Ts[0].value],
+    time: [this.ts[0].value],
+    oak: this.fb.group({
+      L: [this.Ls[0].value],
+      nf: [0],
+      lf: [0],
+    }),
+    diagnosis: [''],
+  });
+
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
+  }
+
+  onSave(): void {
+    if (this.rule.valid) {
+      console.log('---save---');
+
+      console.log('formvalue', this.rule.value);
+
+      console.log('----------');
+    }
   }
 
 }
