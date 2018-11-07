@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rule',
@@ -111,5 +112,4 @@ export class RuleComponent implements OnInit {
       console.log('----------');
     }
   }
-
 }
