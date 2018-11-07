@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 import { RulesListService } from '../../services/rules-list/rules-list.service';
-import { Rule } from 'src/electron/interfaces/rule';
+import { Rule } from 'src/electron/interfaces/Rule';
 
 @Component({
   selector: 'app-list',

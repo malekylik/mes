@@ -1,7 +1,7 @@
 import { Cursor, FilterQuery } from 'mongodb';
 
 import { Database } from './Database'; 
-import { Rule } from '../interfaces/rule';
+import { Rule } from '../interfaces/Rule';
 import { COLLECTIONS } from '../consts/database';
 
 export class RulesApi {

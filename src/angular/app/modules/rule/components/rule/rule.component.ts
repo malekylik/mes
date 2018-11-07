@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
+import { Rule } from '../../../../../../electron/interfaces/Rule';
+import { BaseRule } from '../../../../../../electron/interfaces/BaseRule';
 
 @Component({
   selector: 'app-rule',
@@ -26,7 +28,7 @@ export class RuleComponent implements OnInit {
       viewValue: 'от 12',
       value: '> 12'
     },
-  ]
+  ];
 
   Ts: any[] = [
     {
@@ -45,7 +47,7 @@ export class RuleComponent implements OnInit {
       viewValue: 'от 38.5',
       value: '> 38.5'
     },
-  ]
+  ];
 
   Ls: any[] = [
     {
@@ -64,7 +66,7 @@ export class RuleComponent implements OnInit {
       viewValue: 'от 21',
       value: '> 20'
     },
-  ]
+  ];
 
   ts: any[] = [
     {
@@ -85,7 +87,7 @@ export class RuleComponent implements OnInit {
     },
   ];
 
-  rule = this.fb.group({
+  rule: FormGroup = this.fb.group({
     name: [''],
     age: [this.ages[0].value],
     T: [this.Ts[0].value],
@@ -107,7 +109,9 @@ export class RuleComponent implements OnInit {
     if (this.rule.valid) {
       console.log('---save---');
 
-      console.log('formvalue', this.rule.value);
+      const rule: Rule = new BaseRule(this.rule.value);
+
+      console.log('rule', rule);
 
       console.log('----------');
     }

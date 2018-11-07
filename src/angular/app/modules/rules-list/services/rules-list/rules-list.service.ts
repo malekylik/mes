@@ -3,7 +3,7 @@ import { ElectronService } from 'ngx-electron';
 import { Observable, from } from 'rxjs';
 import { Cursor, FilterQuery } from 'mongodb';
 
-import { Rule } from '../../../../../../electron/interfaces/rule';
+import { Rule } from '../../../../../../electron/interfaces/Rule';
 
 @Injectable()
 export class RulesListService {
