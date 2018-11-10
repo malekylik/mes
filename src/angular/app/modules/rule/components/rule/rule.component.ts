@@ -1,10 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { Rule } from '../../../../../../electron/interfaces/Rule';
 import { BaseRule } from '../../../../../../electron/interfaces/BaseRule';
-import { RuleService } from '../../services/rule/rule.service';
 import { Range } from '../../../../utils/range';
-import { AGES, TS, LS, TIMES } from '../../constants';
+
+enum RuleFormFields {
+  id = '_id',
+  name = 'name',
+  age = 'age',
+  time = 'time',
+  T = 'T',
+  oak = 'oak',
+  diagnosis = 'diagnosis',
+  creationTime = 'creationTime',
+  lastUpdateTime = 'lastUpdateTime',
+}
+
+enum OAKFormFields {
+  leukocytosis = 'L',
+  neutrophilia = 'nf',
+  lymphocytosis = 'lf',
+}
 
 @Component({
   selector: 'app-rule',
@@ -13,19 +30,18 @@ import { AGES, TS, LS, TIMES } from '../../constants';
 })
 export class RuleComponent implements OnInit {
 
-  ages: Range[] = AGES;
+  ruleFormGroup: FormGroup;
 
-  Ts: Range[] = TS;
+  @Input() rule: Rule | null = null;
+  @Input() ages: Range[] = [];
+  @Input() Ts: Range[] = [];
+  @Input() Ls: Range[] = [];
+  @Input() ts: Range[] = [];
 
-  Ls: Range[] = LS;
-
-  ts: Range[] = TIMES;
-
-  rule: FormGroup;
+  @Output() save: EventEmitter<Rule> = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
-    private ruleService: RuleService,
   ) { }
 
   ngOnInit() {
@@ -33,23 +49,34 @@ export class RuleComponent implements OnInit {
   }
 
   onSave(): void {
-    if (this.rule.valid) {
-      this.ruleService.updateRule(new BaseRule(this.rule.value))
-        .subscribe(() => { console.log('saved') });
+    if (this.ruleFormGroup.valid) {
+      const formValue: any = this.ruleFormGroup.value;
+      const rule: Rule = new BaseRule(
+        formValue[RuleFormFields.name],
+        formValue[RuleFormFields.age],
+        formValue[RuleFormFields.time],
+        formValue[RuleFormFields.T],
+        formValue[RuleFormFields.diagnosis],
+        formValue[RuleFormFields.oak],
+        formValue[RuleFormFields.creationTime],
+        formValue[RuleFormFields.lastUpdateTime],
+      );
+
+      this.save.emit(rule);
     }
   }
 
   private buildForm(): void {
-    this.rule = this.fb.group({
-      name: [''],
-      age: [this.ages[0].toString()],
-      T: [this.Ts[0].toString()],
-      time: [this.ts[0].toString()],
-      diagnosis: [''],
-      oak: this.fb.group({
-        L: [this.Ls[0].toString()],
-        nf: [0],
-        lf: [0],
+    this.ruleFormGroup = this.fb.group({
+      [RuleFormFields.name]: [this.rule.name],
+      [RuleFormFields.age]: [this.rule.age],
+      [RuleFormFields.T]: [this.rule.T],
+      [RuleFormFields.time]: [this.rule.t],
+      [RuleFormFields.diagnosis]: [this.rule.diagnosis],
+      [RuleFormFields.oak]: this.fb.group({
+        [OAKFormFields.leukocytosis]: [this.rule.oak.L],
+        [OAKFormFields.neutrophilia]: [this.rule.oak.nf],
+        [OAKFormFields.lymphocytosis]: [this.rule.oak.lf],
       }),
     });
   }

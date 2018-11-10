@@ -6,6 +6,7 @@ import { RuleModule } from '../rule/rule.module';
 import { ListComponent } from './components/list/list.component';
 import { RulesListService } from './services/rules-list/rules-list.service';
 import { RulesListPageComponent } from './components/rules-list-page/rules-list-page.component';
+import { EditRulePageComponent } from './components/edit-rule-page/edit-rule-page.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { RulesListPageComponent } from './components/rules-list-page/rules-list-
   providers: [
     RulesListService
   ],
-  declarations: [ListComponent, RulesListPageComponent],
+  declarations: [ListComponent, RulesListPageComponent, EditRulePageComponent],
   exports: [
     RulesListPageComponent,
   ]

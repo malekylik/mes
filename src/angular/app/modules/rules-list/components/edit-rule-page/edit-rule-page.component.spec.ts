@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RulePageComponent } from './rule-page.component';
+import { EditRulePageComponent } from './edit-rule-page.component';
 
-describe('RulePageComponent', () => {
-  let component: RulePageComponent;
-  let fixture: ComponentFixture<RulePageComponent>;
+describe('EditRulePageComponent', () => {
+  let component: EditRulePageComponent;
+  let fixture: ComponentFixture<EditRulePageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RulePageComponent ]
+      declarations: [ EditRulePageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RulePageComponent);
+    fixture = TestBed.createComponent(EditRulePageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

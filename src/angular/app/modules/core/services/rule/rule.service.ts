@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { Observable, from } from 'rxjs';
 
-import { Rule } from '../../../../../../electron/interfaces/Rule';
+import { Rule } from 'src/electron/interfaces/Rule';
 
 @Injectable()
 export class RuleService {

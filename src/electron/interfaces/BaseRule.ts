@@ -1,19 +1,18 @@
 import { ObjectId } from 'bson';
 
-import { RuleFieldsName } from '../consts';
 import { Rule } from './Rule';
 import { OAK } from './OAK';
 
 export class BaseRule implements Rule {
-    [RuleFieldsName.id]?: ObjectId;
-    [RuleFieldsName.name]: string;
-    [RuleFieldsName.age]: string;
-    [RuleFieldsName.time]: string;
-    [RuleFieldsName.T]: string;
-    [RuleFieldsName.oak]: OAK;
-    [RuleFieldsName.diagnosis]: string;
-    [RuleFieldsName.creationTime]: number;
-    [RuleFieldsName.lastUpdateTime]: number;
+    _id?: ObjectId;
+    name: string;
+    age: string;
+    t: string;
+    T: string;
+    oak: OAK;
+    diagnosis: string;
+    creationTime: number;
+    lastUpdateTime: number;
 
     constructor(
         name: string,
@@ -25,12 +24,12 @@ export class BaseRule implements Rule {
         creationTime?: number,
         lastUpdateTime?: number,
     ) {
-        this[RuleFieldsName.name] = name;
-        this[RuleFieldsName.age] = age;
-        this[RuleFieldsName.T] = T;
-        this[RuleFieldsName.time] = time;
-        this[RuleFieldsName.diagnosis] = diagnosis;
-        this[RuleFieldsName.oak] = oak;
+        this.name = name;
+        this.age = age;
+        this.T = T;
+        this.t = time;
+        this.diagnosis = diagnosis;
+        this.oak = oak;
 
         this.init(creationTime, lastUpdateTime);
     }
@@ -43,15 +42,15 @@ export class BaseRule implements Rule {
         }
 
         if (!creationTime) {
-            this[RuleFieldsName.creationTime] = time;
+            this.creationTime = time;
         } else {
-            this[RuleFieldsName.creationTime] = creationTime;
+            this.creationTime = creationTime;
         }
 
         if (!lastUpdateTime) {
-            this[RuleFieldsName.lastUpdateTime] = time;
+            this.lastUpdateTime = time;
         } else {
-            this[RuleFieldsName.lastUpdateTime] = lastUpdateTime;
+            this.lastUpdateTime = lastUpdateTime;
         }
     }
 }
