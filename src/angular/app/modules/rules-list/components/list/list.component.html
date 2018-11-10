@@ -1,12 +1,17 @@
 <button routerLink="./new">Создать</button>
 <header>
     <h3>Правила:</h3>
-    <app-amount [currentValue]="rules.length" [maxValue]="rulesCount$ | async"></app-amount>
+    <app-amount [currentValue]="rules.length" [maxValue]="this.rulesCount"></app-amount>
 </header>
 <mat-divider></mat-divider>
 <mat-list>
   <ng-template ngFor let-rule [ngForOf]="rules">
-    <a mat-list-item [routerLink]="[rule._id.toHexString()]"> {{rule.name}} </a>
+    <mat-list-item>
+      <h3>
+        <a [routerLink]="[rule._id.toHexString()]">{{rule.name}}</a>
+        <button type="menu" (click)="onDelete(rule._id.toHexString())">delete</button>
+      </h3>
+    </mat-list-item >
     <mat-divider></mat-divider>
   </ng-template>
   <button (click)="getNext()">getNext</button>

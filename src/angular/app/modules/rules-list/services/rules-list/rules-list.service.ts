@@ -39,4 +39,8 @@ export class RulesListService {
   getCount(): Observable<number> {
     return from(this.rulesApi.getCount());
   }
+
+  deleteRule(id: string): Observable<void> {
+    return from(this.rulesApi.deleteRule(id));
+  }
 }

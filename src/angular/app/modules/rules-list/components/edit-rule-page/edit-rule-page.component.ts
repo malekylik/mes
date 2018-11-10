@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { Rule } from 'src/electron/interfaces/Rule';
 import { BaseRule } from 'src/electron/interfaces/BaseRule';
@@ -14,7 +15,7 @@ import { AGES, TS, LS, TIMES } from '../../../rule/constants';
   templateUrl: './edit-rule-page.component.html',
   styleUrls: ['./edit-rule-page.component.scss']
 })
-export class EditRulePageComponent implements OnInit {
+export class EditRulePageComponent implements OnInit, OnDestroy {
 
   ages: Range[] = AGES;
   Ts: Range[] = TS;
@@ -22,6 +23,8 @@ export class EditRulePageComponent implements OnInit {
   ts: Range[] = TIMES;
 
   rule: Rule = null;
+
+  private unsubscribe$ = new Subject(); 
 
   constructor(
     private ruleService: RuleService,
@@ -32,13 +35,15 @@ export class EditRulePageComponent implements OnInit {
     const ID: string = 'id';
 
     this.activatedRoute.params
+      .pipe(
+        takeUntil(this.unsubscribe$),
+      )
       .subscribe((params) => {
         const id: string = params[ID] || null;
 
         if (id) {
           this.ruleService.getRule(id)
           .subscribe((rule: Rule) => { 
-            console.log(rule);
             this.rule = rule; 
           });
         } else {
@@ -56,6 +61,11 @@ export class EditRulePageComponent implements OnInit {
           );
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   onSave(rule: Rule): void {
