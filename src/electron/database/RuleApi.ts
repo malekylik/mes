@@ -11,9 +11,15 @@ export class RuleApi {
                 .insertOne(rule);
     }
 
-    static async updateRule(_id: ObjectId, rule: Partial<Rule>): Promise<UpdateWriteOpResult> {
+    static async updateRule(id: string, rule: Rule): Promise<UpdateWriteOpResult> {
         return (await Database.getDB())
                 .collection(COLLECTIONS.Rules)
-                .updateOne({ _id: _id }, { $set: { rule } });
+                .updateOne({ _id: new ObjectId(id) }, { $set: { ...rule } });
+    }
+
+    static async getRule(id: string): Promise<Rule> {
+        return (await Database.getDB())
+                .collection(COLLECTIONS.Rules)
+                .findOne({ _id: new ObjectId(id) });
     }
 }

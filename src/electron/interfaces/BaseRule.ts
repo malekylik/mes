@@ -1,4 +1,4 @@
-import { ObjectId } from 'bson';
+import { ObjectId } from 'mongodb';
 
 import { Rule } from './Rule';
 import { OAK } from './OAK';
@@ -22,7 +22,6 @@ export class BaseRule implements Rule {
         diagnosis: string,
         oak: OAK,
         creationTime?: number,
-        lastUpdateTime?: number,
     ) {
         this.name = name;
         this.age = age;
@@ -31,26 +30,18 @@ export class BaseRule implements Rule {
         this.diagnosis = diagnosis;
         this.oak = oak;
 
-        this.init(creationTime, lastUpdateTime);
+        this.init(creationTime);
     }
 
-    private init(creationTime?: number, lastUpdateTime?: number): void {
-        let time: number;
+    private init(creationTime?: number): void {
+        const time: number = Date.now();
 
-        if (!creationTime || !lastUpdateTime) {
-            time = Date.now();
-        }
-
-        if (!creationTime) {
+         if (!creationTime) {
             this.creationTime = time;
         } else {
             this.creationTime = creationTime;
         }
 
-        if (!lastUpdateTime) {
-            this.lastUpdateTime = time;
-        } else {
-            this.lastUpdateTime = lastUpdateTime;
-        }
+        this.lastUpdateTime = time;
     }
 }

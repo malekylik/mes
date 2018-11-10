@@ -32,7 +32,7 @@ export class RuleComponent implements OnInit {
 
   ruleFormGroup: FormGroup;
 
-  @Input() rule: Rule | null = null;
+  @Input() rule: Rule = null;
   @Input() ages: Range[] = [];
   @Input() Ts: Range[] = [];
   @Input() Ls: Range[] = [];
@@ -58,8 +58,7 @@ export class RuleComponent implements OnInit {
         formValue[RuleFormFields.T],
         formValue[RuleFormFields.diagnosis],
         formValue[RuleFormFields.oak],
-        formValue[RuleFormFields.creationTime],
-        formValue[RuleFormFields.lastUpdateTime],
+        this.rule._id ? this.rule.creationTime: null,
       );
 
       this.save.emit(rule);

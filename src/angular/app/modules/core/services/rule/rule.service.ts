@@ -15,11 +15,15 @@ export class RuleService {
     this.ruleApi = this.electronService.remote.require('./database/RuleApi').RuleApi;
   }
 
-  updateRule(rule: Rule): Observable<void> {
-    // if (rule._id) {
-    //   return from(this.ruleApi.)
-    // }
+  updateRule(id: string, rule: Rule): Observable<void> {
+    return from(this.ruleApi.updateRule(id, rule));
+  }
 
+  insertRule(rule: Rule): Observable<void> {
     return from(this.ruleApi.insertRule(rule));
+  }
+
+  getRule(id: string): Observable<Rule> {
+    return from(this.ruleApi.getRule(id));
   }
 }

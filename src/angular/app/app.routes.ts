@@ -12,6 +12,7 @@ const ROUTES: Routes = [
         children: [
             { path: '',     component: ListComponent },
             { path: 'new',  component: EditRulePageComponent },
+            { path: ':id',  component: EditRulePageComponent },
         ],
     },
 ];
