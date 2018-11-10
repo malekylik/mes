@@ -1,14 +1,16 @@
 import { ObjectId } from "bson";
 
+import { RuleFieldsName } from '../consts';
 import { OAK } from './OAK';
 
 export interface Rule {
-    _id?: ObjectId,
-    name: string,
-    age: string,
-    T: string,
-    oak: OAK,
-    diagnosis: string,
-    creationTime: number,
-    lastUpdateTime: number,
+    [RuleFieldsName.id]?: ObjectId,
+    [RuleFieldsName.name]: string,
+    [RuleFieldsName.age]: string,
+    [RuleFieldsName.time]: string,
+    [RuleFieldsName.T]: string,
+    [RuleFieldsName.oak]: OAK,
+    [RuleFieldsName.diagnosis]: string,
+    [RuleFieldsName.creationTime]: number,
+    [RuleFieldsName.lastUpdateTime]: number,
 }
