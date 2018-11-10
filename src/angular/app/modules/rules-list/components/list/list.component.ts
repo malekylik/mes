@@ -46,7 +46,7 @@ export class ListComponent implements OnInit {
           }
       },
         () => { },
-        () => { console.log('complited'); });
+        () => { console.log('completed'); });
   }
 
   getNext(): void {

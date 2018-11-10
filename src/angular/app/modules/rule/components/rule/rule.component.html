@@ -4,31 +4,33 @@
   </mat-form-field>
   <mat-form-field>
     <mat-select formControlName="age" placeholder="Возраст" required>
-      <mat-option *ngFor="let age of ages" [value]="age.value">
-        {{age.viewValue}}
+      <mat-option *ngFor="let age of ages" [value]="age.toString()">
+        {{age.inHumanLanguage}}
       </mat-option>
     </mat-select>
+    <mat-hint>в годах</mat-hint>
   </mat-form-field>
   <mat-form-field>
     <mat-select formControlName="T" placeholder="Температура" required>
-      <mat-option *ngFor="let T of Ts" [value]="T.value">
-        {{T.viewValue}}
+      <mat-option *ngFor="let T of Ts" [value]="T.toString()">
+        {{T.inHumanLanguage}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field>
     <mat-select formControlName="time" placeholder="Время от начала заболевания" required>
-      <mat-option *ngFor="let t of ts" [value]="t.value">
-        {{t.viewValue}}
+      <mat-option *ngFor="let t of ts" [value]="t.toString()">
+        {{t.inHumanLanguage}}
       </mat-option>
     </mat-select>
+    <mat-hint>в днях</mat-hint>
   </mat-form-field>
   <fieldset formGroupName="oak">
     <legend>ОАК</legend>
     <mat-form-field>
       <mat-select formControlName="L" placeholder="Лейкоцитоз" required>
-        <mat-option *ngFor="let L of Ls" [value]="L.value">
-          {{L.viewValue}}
+        <mat-option *ngFor="let L of Ls" [value]="L.toString()">
+          {{L.inHumanLanguage}}
         </mat-option>
       </mat-select>
       <mat-hint>10^9</mat-hint>

@@ -1,7 +1,10 @@
 import { MongoRange } from './MongoRange';
+import { Translater } from '../translaters/translater';
+import { InRussianTranslater } from '../translaters/in-russian.translater';
 
 export class Range {
     private range: MongoRange = new MongoRange();
+    private translater: Translater = new InRussianTranslater();
 
     private constructor() {}
 
@@ -37,6 +40,10 @@ export class Range {
         this.range.$lte = $lte;
     }
 
+    get inHumanLanguage(): string {
+        return this.translater.translate(this.range);
+    }
+
     toString(): string {
         const { $gt, $lt } = this.range;
 
@@ -55,7 +62,7 @@ export class Range {
         return (value < $gte && value > $lte);
     }
 
-    static fromString(stringRange: string): Range {
+    static fromString(stringRange: string, precision: number = 1): Range {
         const [left, right] = stringRange.trim().split(';');
 
         let leftNumber: number = Number(left.slice(1));
@@ -73,33 +80,33 @@ export class Range {
 
         if (left[0] === '[') {
             range.$gte = leftNumber;
-            range.$gt = range.$gte - 1;
+            range.$gt = range.$gte - precision;
         } else {
             range.$gt = leftNumber;
-            range.$gte = range.$gt + 1;
+            range.$gte = range.$gt + precision;
         }
 
         if (right[right.length - 1] === ']') {
             range.$lte = rightNumber;
-            range.$lt = range.$lte + 1;
+            range.$lt = range.$lte + precision;
         } else {
             range.$lt = rightNumber;
-            range.$lte = range.$lt - 1;
+            range.$lte = range.$lt - precision;
         }
 
         return range;
     }
 
-    static fromMongoRange(mongoRange: MongoRange): Range {
+    static fromMongoRange(mongoRange: MongoRange, precision: number = 1): Range {
         const { $gt, $gte, $lt, $lte } = mongoRange;
         const range: Range = new Range();
 
         if ($gt) {
             range.$gt = $gt;
-            range.$gte = $gt + 1;
+            range.$gte = $gt + precision;
         } else if ($gte) {
             range.$gte = $gte;
-            range.$gt = $gte - 1;
+            range.$gt = $gte - precision;
         } else {
             range.$gt = -Infinity;
             range.$gte = -Infinity;
@@ -107,10 +114,10 @@ export class Range {
 
         if ($lt) {
             range.$lt = $lt;
-            range.$lte = $lt - 1;
+            range.$lte = $lt - precision;
         } else if ($lte) {
             range.$lte = $lte;
-            range.$lt = $lte + 1;
+            range.$lt = $lte + precision;
         } else {
             range.$lt = Infinity;
             range.$lte = Infinity;
