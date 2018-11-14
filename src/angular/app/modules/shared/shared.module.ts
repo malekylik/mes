@@ -8,12 +8,19 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AmountComponent } from './components/amount/amount.component';
+import { IndeterminateProgressSpinnerComponent } from './components/indeterminate-progress-spinner/indeterminate-progress-spinner.component';
+import { LoadingDirective } from './directives/loading.directive';
 
 @NgModule({
   imports: [
     CommonModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -26,7 +33,12 @@ import { AmountComponent } from './components/amount/amount.component';
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
+    IndeterminateProgressSpinnerComponent,
+    LoadingDirective,
+    MatIconModule,
+    MatMenuModule,
   ],
-  declarations: [AmountComponent]
+  declarations: [AmountComponent, IndeterminateProgressSpinnerComponent, LoadingDirective],
+  entryComponents: [IndeterminateProgressSpinnerComponent],
 })
 export class SharedModule { }

@@ -1,4 +1,5 @@
-import { Range } from '../../../utils/range';
+import { Range } from 'src/angular/app/utils/range';
+import { FormOption } from 'src/angular/app/utils/interfaces/form-option';
 
 const AGES: Range[] = [
     Range.fromString('[0;3)'),
@@ -28,9 +29,21 @@ const TIMES: Range[] = [
     Range.fromString('[25;Infinity)'),
 ];
 
+const SEXES: FormOption[] = [
+    {
+        value: 'М',
+        viewValue: 'M',
+    },
+    {
+        value: 'F',
+        viewValue: 'Ж',
+    },
+];
+
 export {
     AGES,
     TS,
     LS,
     TIMES,
+    SEXES,
 };

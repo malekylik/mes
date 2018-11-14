@@ -1,52 +1,63 @@
-<form [formGroup]="ruleFormGroup" (ngSubmit)="onSave()">
-  <mat-form-field>
-    <input matInput formControlName="name" type="text" placeholder="Имя" required>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select formControlName="age" placeholder="Возраст" required>
-      <mat-option *ngFor="let age of ages" [value]="age.toString()">
-        {{age.inHumanLanguage}}
-      </mat-option>
-    </mat-select>
-    <mat-hint>в годах</mat-hint>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select formControlName="T" placeholder="Температура" required>
-      <mat-option *ngFor="let T of Ts" [value]="T.toString()">
-        {{T.inHumanLanguage}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select formControlName="time" placeholder="Время от начала заболевания" required>
-      <mat-option *ngFor="let t of ts" [value]="t.toString()">
-        {{t.inHumanLanguage}}
-      </mat-option>
-    </mat-select>
-    <mat-hint>в днях</mat-hint>
-  </mat-form-field>
-  <fieldset formGroupName="oak">
-    <legend>ОАК</legend>
+<form class="rule" [formGroup]="ruleFormGroup" (ngSubmit)="onSave()">
+  <div class="rule__wrapper">
     <mat-form-field>
-      <mat-select formControlName="L" placeholder="Лейкоцитоз" required>
-        <mat-option *ngFor="let L of Ls" [value]="L.toString()">
-          {{L.inHumanLanguage}}
+      <input matInput formControlName="name" type="text" placeholder="Имя" required>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-select formControlName="sex" placeholder="Пол" required>
+          <mat-option *ngFor="let sex of sexes" [value]="sex.value">
+            {{sex.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="age" placeholder="Возраст" required>
+        <mat-option *ngFor="let age of ages" [value]="age.toString()">
+          {{age.inHumanLanguage}}
         </mat-option>
       </mat-select>
-      <mat-hint>10^9</mat-hint>
+      <mat-hint>в годах</mat-hint>
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="nf" type="number" min="0" placeholder="Нейтрофилез" required>
-      <mat-hint>в %</mat-hint>
+      <mat-select formControlName="T" placeholder="Температура" required>
+        <mat-option *ngFor="let T of Ts" [value]="T.toString()">
+          {{T.inHumanLanguage}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="lf" type="number" min="0" placeholder="Лимфоцитоз" required>
-      <mat-hint>в %</mat-hint>
+      <mat-select formControlName="time" placeholder="Время от начала заболевания" required>
+        <mat-option *ngFor="let t of ts" [value]="t.toString()">
+          {{t.inHumanLanguage}}
+        </mat-option>
+      </mat-select>
+      <mat-hint>в днях</mat-hint>
     </mat-form-field>
-  </fieldset>
-  <mat-form-field>
-    <input matInput formControlName="diagnosis" type="text" placeholder="Диагноз" required>
-  </mat-form-field>
-  <button mat-raised-button type="submit">Сохранить</button>
-  <button mat-raised-button type="button" routerLink="../">Отмена</button>
+    <fieldset class="fieldset" formGroupName="oak">
+      <legend>ОАК</legend>
+      <mat-form-field>
+        <mat-select formControlName="L" placeholder="Лейкоцитоз" required>
+          <mat-option *ngFor="let L of Ls" [value]="L.toString()">
+            {{L.inHumanLanguage}}
+          </mat-option>
+        </mat-select>
+        <mat-hint>10^9</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="nf" type="number" min="0" placeholder="Нейтрофилез" required>
+        <mat-hint>в %</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="lf" type="number" min="0" placeholder="Лимфоцитоз" required>
+        <mat-hint>в %</mat-hint>
+      </mat-form-field>
+    </fieldset>
+    <mat-form-field>
+      <input matInput formControlName="diagnosis" type="text" placeholder="Диагноз" required>
+    </mat-form-field>
+  </div>
+  <div class="controls">
+      <button mat-raised-button class="controls__save-button" color="primary" type="submit">Сохранить</button>
+      <button mat-raised-button type="button" routerLink="../">Отмена</button>
+  </div>
 </form>

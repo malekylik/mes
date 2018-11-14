@@ -4,6 +4,7 @@ import { Observable, from } from 'rxjs';
 import { Cursor, FilterQuery } from 'mongodb';
 
 import { Rule } from 'src/electron/interfaces/Rule';
+import { map } from 'src/angular/app/utils/interfaces/map';
 
 @Injectable()
 export class RulesListService {
@@ -20,13 +21,17 @@ export class RulesListService {
     return from(this.rulesApi.getRules(filterQuery));
   }
 
-  getRules(skip: number = 0, limit: number = 0, filterQuery?: FilterQuery<any>): Observable<Array<Rule>> {
+  getRules(skip: number = 0, limit: number = 0, filterQuery?: FilterQuery<any>, projection?: map<number>): Observable<Array<Rule>> {
     return from(
       new Promise(async (resolve) => {
-        const limitedCursor: Cursor<Rule> = (await this.rulesApi.getRules(filterQuery))
+        let limitedCursor: Cursor<Rule> = (await this.rulesApi.getRules(filterQuery, projection))
         .skip(skip)
         .limit(limit);
-  
+        
+        if (projection) {
+          limitedCursor = limitedCursor.project(projection);
+        }
+
         const rulesPromises: Promise<Rule>[] = [];
   
         while (await limitedCursor.hasNext()) rulesPromises.push(limitedCursor.next());

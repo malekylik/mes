@@ -17,7 +17,7 @@ import { CoreModule } from './modules/core/core.module';
     CoreModule,
     RulesListModule,
     NgxElectronModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
   ],
   providers: [],
   bootstrap: [AppComponent]

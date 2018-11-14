@@ -5,10 +5,11 @@ import { takeUntil } from 'rxjs/operators';
 
 import { Rule } from 'src/electron/interfaces/Rule';
 import { BaseRule } from 'src/electron/interfaces/BaseRule';
+import { setFactory } from 'src/angular/app/utils/set-factory';
+import { Range } from 'src/angular/app/utils/range';
+import { FormOption } from 'src/angular/app/utils/interfaces/form-option';
 import { RuleService } from '../../../core/services/rule/rule.service';
-import { Range } from '../../../../utils/range';
-import { setFactory } from '../../../../utils/set-factory';
-import { AGES, TS, LS, TIMES } from '../../../rule/constants';
+import { AGES, TS, LS, TIMES, SEXES } from '../../../rule/constants';
 
 @Component({
   selector: 'app-edit-rule-page',
@@ -21,8 +22,10 @@ export class EditRulePageComponent implements OnInit, OnDestroy {
   Ts: Range[] = TS;
   Ls: Range[] = LS;
   ts: Range[] = TIMES;
+  sexes: FormOption[] = SEXES;
 
   rule: Rule = null;
+  heading: string = '';
 
   private unsubscribe$ = new Subject(); 
 
@@ -42,15 +45,19 @@ export class EditRulePageComponent implements OnInit, OnDestroy {
         const id: string = params[ID] || null;
 
         if (id) {
+          this.heading = 'Редактирование';
+
           this.ruleService.getRule(id)
           .subscribe((rule: Rule) => { 
             this.rule = rule; 
           });
         } else {
+          this.heading = 'Создание';
+
           this.rule = new BaseRule(
             '',
             this.ages[0].toString(),
-            this.ts[0].toString(),
+            this.sexes[0].value,
             this.Ts[0].toString(),
             '',
             {
@@ -58,6 +65,7 @@ export class EditRulePageComponent implements OnInit, OnDestroy {
               nf: 0,
               lf: 0,
             },
+            this.ts[0].toString(),
           );
         }
       });

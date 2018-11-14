@@ -1,18 +1,27 @@
-<button routerLink="./new">Создать</button>
-<header>
-    <h3>Правила:</h3>
-    <app-amount [currentValue]="rules.length" [maxValue]="this.rulesCount"></app-amount>
-</header>
-<mat-divider></mat-divider>
-<mat-list>
-  <ng-template ngFor let-rule [ngForOf]="rules">
-    <mat-list-item>
-      <h3>
-        <a [routerLink]="[rule._id.toHexString()]">{{rule.name}}</a>
-        <button type="menu" (click)="onDelete(rule._id.toHexString())">delete</button>
-      </h3>
-    </mat-list-item >
-    <mat-divider></mat-divider>
-  </ng-template>
-  <button (click)="getNext()">getNext</button>
-</mat-list>
+<div class="rules-list">
+  <header class="header mat-elevation-z4">
+    <dir class="header__wrapper">
+      <h2>Правила:</h2>
+      <app-amount *appLoading="rulesCount;diameter: 20; color: 'accent'" [currentValue]="rules.length" [maxValue]="rulesCount"></app-amount>
+      <button mat-fab class="header__create-button" routerLink="./new">
+        <mat-icon>add</mat-icon>
+      </button>
+    </dir>
+  </header>
+  <mat-list class="rules-list__list">
+    <ng-template *appLoading="!loading" ngFor let-rule [ngForOf]="rules">
+      <mat-list-item class="rule">
+        <mat-menu #appMenu="matMenu">
+          <button mat-menu-item [routerLink]="[rule._id.toHexString()]">Изменить</button>
+          <button mat-menu-item (click)="onDelete(rule._id.toHexString())">Удалить</button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" class="rule__menu-button">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <h3 class="mat-h3 rule-name">{{rule.name}}</h3>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </ng-template>
+    <button mat-raised-button color="primary" class="list__get-button get-button" (click)="getNext()">Следующие</button>
+  </mat-list>
+</div>

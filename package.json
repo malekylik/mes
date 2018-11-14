@@ -47,6 +47,7 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "material-design-icons": "^3.0.1",
     "mongodb": "^3.1.8",
     "ngx-electron": "^1.0.4",
     "protractor": "~5.4.0",

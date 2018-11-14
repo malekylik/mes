@@ -1,8 +1,16 @@
-<app-rule
-    *ngIf="rule"
-    [rule]="rule"
-    [ages]="ages"
-    [Ts]="Ts"
-    [Ls]="Ls"
-    [ts]="ts"
-    (save)="onSave($event)"></app-rule>
+<header class="mat-elevation-z4 header">
+    <div class="header__wrapper">
+        <h2>{{heading}}</h2>
+    </div>
+</header>
+<div class="edit-rule-page__rule">
+    <app-rule
+        *appLoading="rule"
+        [rule]="rule"
+        [ages]="ages"
+        [Ts]="Ts"
+        [Ls]="Ls"
+        [ts]="ts"
+        [sexes]="sexes"
+        (save)="onSave($event)"></app-rule>
+</div>

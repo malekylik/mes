@@ -1,0 +1,20 @@
+.rule {
+
+    &__wrapper {
+        display: grid;
+        grid-auto-rows: minmax(85px, auto);
+        align-items: center;
+    }
+}
+
+.fieldset {
+    display: flex;
+    flex-flow: column;
+}
+
+.controls {
+
+    &__save-button {
+        margin-right: 10px;
+    }
+}
