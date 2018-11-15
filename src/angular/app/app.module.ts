@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { RulesListModule } from './modules/rules-list/rules-list.module';
 import { ROUTES } from './app.routes';
 import { CoreModule } from './modules/core/core.module';
+import { SharedModule } from './modules/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { CoreModule } from './modules/core/core.module';
     BrowserModule,
     CoreModule,
     RulesListModule,
+    SharedModule,
     NgxElectronModule,
     RouterModule.forRoot(ROUTES),
   ],

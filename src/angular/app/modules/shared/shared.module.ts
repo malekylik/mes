@@ -11,20 +11,27 @@ import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { AmountComponent } from './components/amount/amount.component';
 import { IndeterminateProgressSpinnerComponent } from './components/indeterminate-progress-spinner/indeterminate-progress-spinner.component';
 import { LoadingDirective } from './directives/loading.directive';
+import { TabNavComponent } from './components/tab-nav/tab-nav.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatTabsModule,
+    RouterModule,
   ],
   exports: [
-    BrowserAnimationsModule,
     AmountComponent,
+    IndeterminateProgressSpinnerComponent,
+    LoadingDirective,
+    TabNavComponent,
+    BrowserAnimationsModule,
     MatListModule,
     MatFormFieldModule,
     MatInputModule,
@@ -33,12 +40,16 @@ import { LoadingDirective } from './directives/loading.directive';
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
-    IndeterminateProgressSpinnerComponent,
-    LoadingDirective,
     MatIconModule,
     MatMenuModule,
+    MatTabsModule,
   ],
-  declarations: [AmountComponent, IndeterminateProgressSpinnerComponent, LoadingDirective],
+  declarations: [
+    AmountComponent,
+    IndeterminateProgressSpinnerComponent,
+    LoadingDirective,
+    TabNavComponent
+  ],
   entryComponents: [IndeterminateProgressSpinnerComponent],
 })
 export class SharedModule { }
