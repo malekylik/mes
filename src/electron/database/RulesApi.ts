@@ -1,7 +1,7 @@
-import { Cursor, FilterQuery } from 'mongodb';
+import { Cursor, FilterQuery, DeleteWriteOpResultObject, ObjectId } from 'mongodb';
 
 import { Database } from './Database'; 
-import { Rule } from '../interfaces/rule';
+import { Rule } from '../interfaces/Rule';
 import { COLLECTIONS } from '../consts/database';
 
 export class RulesApi {
@@ -15,5 +15,11 @@ export class RulesApi {
         return (await Database.getDB())
                 .collection(COLLECTIONS.Rules)
                 .countDocuments();
+    }
+
+    static async deleteRule(id: string): Promise<DeleteWriteOpResultObject> {
+        return (await Database.getDB())
+                .collection(COLLECTIONS.Rules)
+                .deleteOne({ _id: new ObjectId(id) });
     }
 } 

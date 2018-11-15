@@ -1,23 +1,26 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, takeUntil } from 'rxjs/operators';
 
 import { RulesListService } from '../../services/rules-list/rules-list.service';
-import { Rule } from 'src/electron/interfaces/rule';
+import { Rule } from 'src/electron/interfaces/Rule';
+import { map } from 'src/angular/app/utils/interfaces/map';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnDestroy {
 
   rules: Rule[] = [];
   rulesLoadCount: number = 15;
   rulesCount: number;
+  loading: boolean = false;
 
-  rulesCount$: Observable<number>;
-  loadMore$: Subject<Observable<Rule[]>> = new Subject();
+  private loadMore$: Subject<Observable<Rule[]>> = new Subject();
+  private unsubscribe$ = new Subject();
+  private projection: map<number> = { "name": 1 };
 
   constructor(
     private rulesListService: RulesListService,
@@ -25,31 +28,63 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.rulesCount$ = this.rulesListService.getCount();
-    this.rulesCount$.subscribe((count: number) => {
-      this.rulesCount = count;
+    this.initTotalCount();
+    this.initRulesList();
+  }
 
-      this.getNext();
-    });
-
-    this.loadMore$
-      .asObservable()
-      .pipe(
-        mergeMap(rules => rules)
-      )
-      .subscribe((rules: Rule[]) => {
-          this.rules.push(...rules);
-          this.cd.markForCheck();
-
-          if (this.rules.length >= this.rulesCount) {
-            this.loadMore$.complete();
-          }
-      },
-        () => { },
-        () => { console.log('complited'); });
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   getNext(): void {
-    this.loadMore$.next(this.rulesListService.getRules(this.rules.length, this.rulesLoadCount));
+    if (this.rules.length < this.rulesCount) {
+      this.loading = true;
+      this.loadMore$.next(this.rulesListService.getRules(this.rules.length, this.rulesLoadCount, {}, this.projection));
+    }
+  }
+
+  onDelete(id: string): void {
+    this.rulesListService.
+      deleteRule(id)
+      .subscribe(() => {
+        const i: number = this.rules.findIndex((rule) => rule._id.toHexString() === id);
+
+        if (i !== -1) {
+          this.rules.splice(i, 1);
+        }
+
+        this.rulesCount -= 1;
+      });
+  }
+
+  private initTotalCount(): void {
+    this.rulesListService.getCount()
+      .subscribe((count: number) => {
+        this.rulesCount = count;
+
+        this.getNext();
+      });
+  }
+
+  private initRulesList(): void {
+    this.loadMore$
+      .asObservable()
+      .pipe(
+        mergeMap(rules => rules),
+        takeUntil(this.unsubscribe$),
+      )
+      .subscribe((rules: Rule[]) => {
+        this.rules.push(...rules);
+        this.loading = false;
+        this.cd.markForCheck();
+
+        if (this.rules.length >= this.rulesCount) {
+          this.loadMore$.complete();
+        }
+      },
+        () => { },
+        () => { console.log('completed'); }
+      );
   }
 }
