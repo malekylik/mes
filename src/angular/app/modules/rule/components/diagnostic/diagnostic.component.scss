@@ -1,0 +1,10 @@
+.diagnostic {
+    display: grid;
+    grid-auto-rows: minmax(85px, auto);
+    align-items: center;
+}
+
+.fieldset {
+    display: flex;
+    flex-flow: column;
+}
