@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
 
-import { Rule } from 'src/electron/interfaces/Rule';
 import { Range } from 'src/angular/app/utils/range';
 import { FormOption } from 'src/angular/app/utils/interfaces/form-option';
 
@@ -14,7 +13,6 @@ import { FormOption } from 'src/angular/app/utils/interfaces/form-option';
 export class DiagnosticComponent implements OnInit {
 
   @Input() form: FormGroup;
-  @Input() rule: Rule = null;
   @Input() ages: Range[] = [];
   @Input() Ts: Range[] = [];
   @Input() Ls: Range[] = [];

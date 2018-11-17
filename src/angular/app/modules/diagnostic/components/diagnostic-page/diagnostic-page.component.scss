@@ -1,11 +1,12 @@
 @import "src/angular/app/styles/mixins/layout.scss";
 
-.edit-rule-page {
+.diagnostic-page {
+    padding-top: $top-padding;
+    padding-bottom: $bottom-padding;
 
-    &__rule {
-        padding-top: $top-padding;
-        padding-bottom: $bottom-padding;
+    @include page-width();
+}
 
-        @include page-width();
-    }
+.controls {
+    margin-top: 10px;
 }
