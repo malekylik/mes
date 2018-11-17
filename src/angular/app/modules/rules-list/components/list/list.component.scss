@@ -8,7 +8,6 @@
         top: 0;
         right: 0;
     }
-    
 }
 
 .rules-list {
@@ -16,28 +15,6 @@
 
     &__list {
         @include page-width();
-    }
-}
-
-.header {
-    color: #fff;
-    background-color: #3F51B5;
-
-    &__wrapper {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        min-height: $header-height;
-        line-height: $header-height;
-        margin-top: 0;
-
-        @include page-width();
-    }
-
-    &__create-button {
-        position: absolute;
-        bottom: -28px;
-        left: -56px + -15px;
     }
 }
 

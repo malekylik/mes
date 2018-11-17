@@ -1,0 +1,11 @@
+<app-header title="Диагностика:"></app-header>
+<div class="edit-rule-page__rule">
+  <app-rule
+      [rule]="rule"
+      [ages]="ages"
+      [Ts]="Ts"
+      [Ls]="Ls"
+      [ts]="ts"
+      [sexes]="sexes"
+      (save)="onSave($event)"></app-rule>
+</div>

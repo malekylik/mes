@@ -17,6 +17,7 @@ import { AmountComponent } from './components/amount/amount.component';
 import { IndeterminateProgressSpinnerComponent } from './components/indeterminate-progress-spinner/indeterminate-progress-spinner.component';
 import { LoadingDirective } from './directives/loading.directive';
 import { TabNavComponent } from './components/tab-nav/tab-nav.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { TabNavComponent } from './components/tab-nav/tab-nav.component';
   exports: [
     AmountComponent,
     IndeterminateProgressSpinnerComponent,
+    HeaderComponent,
     LoadingDirective,
     TabNavComponent,
     BrowserAnimationsModule,
@@ -48,7 +50,8 @@ import { TabNavComponent } from './components/tab-nav/tab-nav.component';
     AmountComponent,
     IndeterminateProgressSpinnerComponent,
     LoadingDirective,
-    TabNavComponent
+    TabNavComponent,
+    HeaderComponent,
   ],
   entryComponents: [IndeterminateProgressSpinnerComponent],
 })
