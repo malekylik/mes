@@ -45,14 +45,14 @@ export class EditRulePageComponent implements OnInit, OnDestroy {
         const id: string = params[ID] || null;
 
         if (id) {
-          this.heading = 'Редактирование';
+          this.heading = 'Редактирование:';
 
           this.ruleService.getRule(id)
           .subscribe((rule: Rule) => { 
             this.rule = rule; 
           });
         } else {
-          this.heading = 'Создание';
+          this.heading = 'Создание:';
 
           this.rule = new BaseRule(
             '',

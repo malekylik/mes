@@ -1,8 +1,4 @@
-<header class="mat-elevation-z4 header">
-    <div class="header__wrapper">
-        <h2>{{heading}}</h2>
-    </div>
-</header>
+<app-header [title]="heading"></app-header>
 <div class="edit-rule-page__rule">
     <app-rule
         *appLoading="rule"

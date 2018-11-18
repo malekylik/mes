@@ -15,7 +15,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
   rules: Rule[] = [];
   rulesLoadCount: number = 15;
-  rulesCount: number;
+  rulesCount: number = null;
   loading: boolean = false;
 
   private loadMore$: Subject<Observable<Rule[]>> = new Subject();
@@ -56,6 +56,10 @@ export class ListComponent implements OnInit, OnDestroy {
 
         this.rulesCount -= 1;
       });
+  }
+
+  get isRulesCountLoaded(): boolean {
+    return !(this.rulesCount === null);
   }
 
   private initTotalCount(): void {

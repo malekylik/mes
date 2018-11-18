@@ -1,0 +1,12 @@
+@import "src/angular/app/styles/mixins/layout.scss";
+
+.diagnostic-page {
+    padding-top: $top-padding;
+    padding-bottom: $bottom-padding;
+
+    @include page-width();
+}
+
+.controls {
+    margin-top: 10px;
+}

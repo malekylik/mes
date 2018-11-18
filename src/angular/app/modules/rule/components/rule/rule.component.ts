@@ -1,29 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Rule } from 'src/electron/interfaces/Rule';
 import { BaseRule } from 'src/electron/interfaces/BaseRule';
 import { Range } from 'src/angular/app/utils/range';
 import { FormOption } from 'src/angular/app/utils/interfaces/form-option';
-
-enum RuleFormFields {
-  id = '_id',
-  name = 'name',
-  age = 'age',
-  sex = 'sex',
-  time = 'time',
-  T = 'T',
-  oak = 'oak',
-  diagnosis = 'diagnosis',
-  creationTime = 'creationTime',
-  lastUpdateTime = 'lastUpdateTime',
-}
-
-enum OAKFormFields {
-  leukocytosis = 'L',
-  neutrophilia = 'nf',
-  lymphocytosis = 'lf',
-}
+import { RuleFormFields, DiagnosticFormFields, OAKFormFields} from '../../constants';
 
 @Component({
   selector: 'app-rule',
@@ -56,12 +38,12 @@ export class RuleComponent implements OnInit {
       const formValue: any = this.ruleFormGroup.value;
       const rule: Rule = new BaseRule(
         formValue[RuleFormFields.name],
-        formValue[RuleFormFields.age],
-        formValue[RuleFormFields.sex],
-        formValue[RuleFormFields.T],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.age],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.sex],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.T],
         formValue[RuleFormFields.diagnosis],
-        formValue[RuleFormFields.oak],
-        formValue[RuleFormFields.time],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.oak],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.time],
         this.rule._id ? this.rule.creationTime: null,
       );
 
@@ -71,17 +53,19 @@ export class RuleComponent implements OnInit {
 
   private buildForm(): void {
     this.ruleFormGroup = this.fb.group({
-      [RuleFormFields.name]: [this.rule.name],
-      [RuleFormFields.age]: [this.rule.age],
-      [RuleFormFields.T]: [this.rule.T],
-      [RuleFormFields.sex]: [this.rule.sex],
-      [RuleFormFields.time]: [this.rule.t],
-      [RuleFormFields.diagnosis]: [this.rule.diagnosis],
-      [RuleFormFields.oak]: this.fb.group({
-        [OAKFormFields.leukocytosis]: [this.rule.oak.L],
-        [OAKFormFields.neutrophilia]: [this.rule.oak.nf],
-        [OAKFormFields.lymphocytosis]: [this.rule.oak.lf],
+      [RuleFormFields.name]: [this.rule.name, Validators.required],
+      [RuleFormFields.diagnostic]: this.fb.group({
+        [DiagnosticFormFields.age]: [this.rule.age, Validators.required],
+        [DiagnosticFormFields.T]: [this.rule.T, Validators.required],
+        [DiagnosticFormFields.sex]: [this.rule.sex, Validators.required],
+        [DiagnosticFormFields.time]: [this.rule.t, Validators.required],
+        [DiagnosticFormFields.oak]: this.fb.group({
+          [OAKFormFields.leukocytosis]: [this.rule.oak.L, Validators.required],
+          [OAKFormFields.neutrophilia]: [this.rule.oak.nf, Validators.required],
+          [OAKFormFields.lymphocytosis]: [this.rule.oak.lf, Validators.required],
+        }),
       }),
+      [RuleFormFields.diagnosis]: [this.rule.diagnosis, Validators.required],
     });
   }
 }

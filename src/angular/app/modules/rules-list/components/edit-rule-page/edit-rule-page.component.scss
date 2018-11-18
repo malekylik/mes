@@ -1,17 +1,5 @@
 @import "src/angular/app/styles/mixins/layout.scss";
 
-.header {
-    background-color: #3F51B5;
-    color: #E8EAF6;
-
-    &__wrapper {
-        height: $header-height;
-        line-height: $header-height;
-
-        @include page-width();
-    }
-}
-
 .edit-rule-page {
 
     &__rule {
