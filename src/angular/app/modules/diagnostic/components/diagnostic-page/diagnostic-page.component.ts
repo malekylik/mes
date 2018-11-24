@@ -6,6 +6,10 @@ import { RuleFormFields, DiagnosticFormFields, OAKFormFields } from '../../../ru
 import { Range } from 'src/angular/app/utils/range';
 import { FormOption } from 'src/angular/app/utils/interfaces/form-option';
 import { AGES, TS, LS, TIMES, SEXES } from '../../../rule/constants';
+import { InferenceService } from '../../../inference/services/inference/inference.service';
+import { BaseRule } from 'src/electron/interfaces/BaseRule';
+import { map } from 'src/angular/app/utils/interfaces/map';
+import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
 
 @Component({
   selector: 'app-diagnostic-page',
@@ -25,6 +29,7 @@ export class DiagnosticPageComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private inferenceEngine: InferenceService,
   ) { }
 
   ngOnInit() {
@@ -33,7 +38,26 @@ export class DiagnosticPageComponent implements OnInit {
 
   onDiagnost(): void {
     if (this.diagnosticFormGroup.valid) {
-      console.log('diagnostic');
+      const formValue: any = this.diagnosticFormGroup.value;
+      const rule: Rule = new BaseRule(
+        '',
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.age],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.sex],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.T],
+        formValue[RuleFormFields.diagnosis],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.oak],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.time],
+      );
+
+      this.inferenceEngine.inference(rule).subscribe(
+        (result: map<DiagnosisInfo[]>) => {
+          console.log(result);
+
+          Object.keys(result).forEach((d: string) => {
+            console.log(`${d}: `, result[d]);
+          });
+        }
+      );
     }
   }
 

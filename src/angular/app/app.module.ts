@@ -9,6 +9,7 @@ import { RulesListModule } from './modules/rules-list/rules-list.module';
 import { CoreModule } from './modules/core/core.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { DiagnosticModule } from './modules/diagnostic/diagnostic.module';
+import { InferenceModule } from './modules/inference/inference.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { DiagnosticModule } from './modules/diagnostic/diagnostic.module';
     RulesListModule,
     SharedModule,
     DiagnosticModule,
+    InferenceModule,
     RouterModule.forRoot(ROUTES),
   ],
   providers: [],
