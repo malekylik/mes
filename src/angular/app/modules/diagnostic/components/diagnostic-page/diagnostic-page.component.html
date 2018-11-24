@@ -4,7 +4,9 @@
     <app-diagnostic [form]="diagnosticFormGroup" [ages]="ages" [Ts]="Ts" [Ls]="Ls" [ts]="ts"
       [sexes]="sexes"></app-diagnostic>
     <div class="controls">
-      <button mat-raised-button class="controls__save-button" color="primary" type="submit">Диагностирование</button>
+      <button [disabled]="loading" mat-raised-button class="controls__save-button" color="primary" type="submit">
+        <span *appLoading="!loading; color: 'accent'">Диагностирование</span>
+      </button>
     </div>
   </form>
 </div>

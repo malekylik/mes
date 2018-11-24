@@ -6,7 +6,7 @@
     </button>
   </app-header>
   <mat-list class="rules-list__list">
-    <ng-template *appLoading="!loading" ngFor let-rule [ngForOf]="rules">
+    <ng-template *appLoading="!loading; diameter: 100" ngFor let-rule [ngForOf]="rules">
       <mat-list-item class="rule">
         <mat-menu #appMenu="matMenu">
           <button mat-menu-item [routerLink]="[rule._id.toHexString()]">Изменить</button>

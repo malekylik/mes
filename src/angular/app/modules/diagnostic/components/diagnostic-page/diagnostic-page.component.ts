@@ -26,6 +26,7 @@ export class DiagnosticPageComponent implements OnInit {
   ts: Range[] = TIMES;
   sexes: FormOption[] = SEXES;
   rule: Rule = null;
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -38,6 +39,8 @@ export class DiagnosticPageComponent implements OnInit {
 
   onDiagnost(): void {
     if (this.diagnosticFormGroup.valid) {
+      this.loading = true;
+      
       const formValue: any = this.diagnosticFormGroup.value;
       const rule: Rule = new BaseRule(
         '',
@@ -56,6 +59,8 @@ export class DiagnosticPageComponent implements OnInit {
           Object.keys(result).forEach((d: string) => {
             console.log(`${d}: `, result[d]);
           });
+
+          this.loading = false;
         }
       );
     }
