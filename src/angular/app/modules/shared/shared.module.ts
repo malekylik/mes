@@ -14,6 +14,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 import { AmountComponent } from './components/amount/amount.component';
 import { IndeterminateProgressSpinnerComponent } from './components/indeterminate-progress-spinner/indeterminate-progress-spinner.component';
@@ -49,6 +50,7 @@ import { HeaderComponent } from './components/header/header.component';
     MatTabsModule,
     MatExpansionModule,
     MatSortModule,
+    MatTableModule,
   ],
   declarations: [
     AmountComponent,

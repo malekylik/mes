@@ -10,6 +10,7 @@ import { InferenceService } from '../../../inference/services/inference/inferenc
 import { BaseRule } from 'src/electron/interfaces/BaseRule';
 import { map } from 'src/angular/app/utils/interfaces/map';
 import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
+import { GeneralDiagnosisInfo } from 'src/electron/interfaces/GeneralDiagnosisInfo';
 
 @Component({
   selector: 'app-diagnostic-page',
@@ -28,6 +29,7 @@ export class DiagnosticPageComponent implements OnInit {
   rule: Rule = null;
   loading: boolean = false;
   diagnosticInfo: map<DiagnosisInfo[]> = null;
+  general: GeneralDiagnosisInfo[] = null;
 
   constructor(
     private fb: FormBuilder,
@@ -58,7 +60,7 @@ export class DiagnosticPageComponent implements OnInit {
         (result: map<DiagnosisInfo[]>) => {
           const d = this.inferenceEngine.getGeneralInfo(result);
           this.diagnosticInfo = result;
-
+          this.general = d;
           console.log(d);
 
           this.loading = false;

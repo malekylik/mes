@@ -1,0 +1,19 @@
+.panel {
+
+    &__info-table {
+        width: 100%;
+        
+    }
+}
+
+.info-table {
+    &__row {
+        display: flex;
+    }
+}
+
+.row {
+    &__cell {
+        flex: (1 / 3);
+    }
+}

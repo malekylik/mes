@@ -4,6 +4,7 @@ import { Sort } from '@angular/material';
 import { map } from 'src/angular/app/utils/interfaces/map';
 import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
 import { Rule } from 'src/electron/interfaces/Rule';
+import { GeneralDiagnosisInfo } from 'src/electron/interfaces/GeneralDiagnosisInfo';
 
 @Component({
   selector: 'app-diagnostic-info',
@@ -12,8 +13,10 @@ import { Rule } from 'src/electron/interfaces/Rule';
 })
 export class DiagnosticInfoComponent implements OnInit {
   step = -1;
+  displayedColumns: string[] = ['diagnosis', 'criteriaName', 'count'];
 
   @Input() diagnosticInfo: map<DiagnosisInfo[]> = {};
+  @Input() general: GeneralDiagnosisInfo[] = [];
 
   private nonSortedData: DiagnosisInfo[] = [];
 
@@ -23,8 +26,11 @@ export class DiagnosticInfoComponent implements OnInit {
   }
 
   setStep(index: number, key: string) {
+    if (key !== undefined) {
+      this.nonSortedData = [...this.diagnosticInfo[key]];
+    }
+
     this.step = index;
-    this.nonSortedData = [...this.diagnosticInfo[key]];
   }
 
   getRules(rules: Partial<Rule[]>): string {
