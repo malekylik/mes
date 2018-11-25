@@ -56,12 +56,10 @@ export class DiagnosticPageComponent implements OnInit {
 
       this.inferenceEngine.inference(rule).subscribe(
         (result: map<DiagnosisInfo[]>) => {
+          const d = this.inferenceEngine.getGeneralInfo(result);
           this.diagnosticInfo = result;
-          console.log(result);
 
-          Object.keys(result).forEach((d: string) => {
-            console.log(`${d}: `, result[d]);
-          });
+          console.log(d);
 
           this.loading = false;
         }

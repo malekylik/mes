@@ -8,6 +8,7 @@ import { Rule } from 'src/electron/interfaces/Rule';
 import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
 import { map } from 'src/angular/app/utils/interfaces/map';
 import { Observable } from 'rxjs';
+import { GeneralDiagnosisInfo } from 'src/electron/interfaces/GeneralDiagnosisInfo';
 
 @Injectable()
 export class InferenceService {
@@ -36,5 +37,34 @@ export class InferenceService {
     }
 
     return result;
+  }
+
+  getGeneralInfo(criteria: map<DiagnosisInfo[]>): GeneralDiagnosisInfo[] {
+    const temp: map<GeneralDiagnosisInfo> = {};
+    const result: GeneralDiagnosisInfo[] = [];
+
+    Object.keys(criteria).forEach((cretiri) => {
+      const diagnosisInfo: DiagnosisInfo[] = criteria[cretiri];
+      const diagnosis: string = diagnosisInfo.reduce((prev: DiagnosisInfo, curr: DiagnosisInfo) => {
+        return prev.count > curr.count ? prev : curr;
+      }, diagnosisInfo[0])._id;
+
+      if (!temp[diagnosis]) {
+        temp[diagnosis] = {
+          diagnosis,
+          count: 0,
+          criteriaName: [],
+        };
+      }
+
+      temp[diagnosis].count += 1;
+      temp[diagnosis].criteriaName.push(cretiri);
+    });
+
+    Object.keys(temp).forEach((d) => {
+      result.push(temp[d]);
+    });
+
+    return result.sort((l: GeneralDiagnosisInfo, r: GeneralDiagnosisInfo) => l.count - r.count);
   }
 }
