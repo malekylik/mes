@@ -1,0 +1,22 @@
+<mat-accordion *ngFor="let info of diagnosticInfo | keyvalue; index as i;">
+  <mat-expansion-panel [expanded]="step === i" (opened)="setStep(i, info.key)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{info.key}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <table matSort (matSortChange)="sortData($event, info.key)">
+      <tr>
+        <th mat-sort-header="diagnosis" disabled>Диагноз</th>
+        <th mat-sort-header="rules" disabled>Правила</th>
+        <th mat-sort-header="count">Количесвто</th>
+      </tr>
+
+      <tr *ngFor="let value of info.value">
+        <td>{{value._id}}</td>
+        <td>{{getRules(value.rules)}}</td>
+        <td>{{value.count}}</td>
+      </tr>
+    </table>
+  </mat-expansion-panel>
+</mat-accordion>

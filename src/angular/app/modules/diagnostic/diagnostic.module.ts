@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DiagnosticPageComponent } from './components/diagnostic-page/diagnostic-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { RuleModule } from '../rule/rule.module';
+import { DiagnosticInfoComponent } from './components/diagnostic-info/diagnostic-info.component';
 
 @NgModule({
   imports: [
@@ -11,7 +12,7 @@ import { RuleModule } from '../rule/rule.module';
     SharedModule,
     RuleModule,
   ],
-  declarations: [DiagnosticPageComponent],
+  declarations: [DiagnosticPageComponent, DiagnosticInfoComponent],
   exports: [DiagnosticPageComponent],
 })
 export class DiagnosticModule { }

@@ -27,6 +27,7 @@ export class DiagnosticPageComponent implements OnInit {
   sexes: FormOption[] = SEXES;
   rule: Rule = null;
   loading: boolean = false;
+  diagnosticInfo: map<DiagnosisInfo[]> = null;
 
   constructor(
     private fb: FormBuilder,
@@ -40,6 +41,7 @@ export class DiagnosticPageComponent implements OnInit {
   onDiagnost(): void {
     if (this.diagnosticFormGroup.valid) {
       this.loading = true;
+      this.diagnosticInfo = null;
       
       const formValue: any = this.diagnosticFormGroup.value;
       const rule: Rule = new BaseRule(
@@ -54,6 +56,7 @@ export class DiagnosticPageComponent implements OnInit {
 
       this.inferenceEngine.inference(rule).subscribe(
         (result: map<DiagnosisInfo[]>) => {
+          this.diagnosticInfo = result;
           console.log(result);
 
           Object.keys(result).forEach((d: string) => {

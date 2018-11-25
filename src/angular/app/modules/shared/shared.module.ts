@@ -12,6 +12,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSortModule } from '@angular/material/sort';
 
 import { AmountComponent } from './components/amount/amount.component';
 import { IndeterminateProgressSpinnerComponent } from './components/indeterminate-progress-spinner/indeterminate-progress-spinner.component';
@@ -45,6 +47,8 @@ import { HeaderComponent } from './components/header/header.component';
     MatIconModule,
     MatMenuModule,
     MatTabsModule,
+    MatExpansionModule,
+    MatSortModule,
   ],
   declarations: [
     AmountComponent,
