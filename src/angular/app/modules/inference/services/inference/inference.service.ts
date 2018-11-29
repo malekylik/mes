@@ -3,20 +3,21 @@ import { ElectronService } from 'ngx-electron';
 import { from } from 'rxjs';
 
 import { InferenceRule, InferenceRuleConstructor } from '../../inference-rules/inference-rule.model';
-import { AgeLeukocytosisTime } from '../../inference-rules/age-leukocytosis-time';
 import { Rule } from 'src/electron/interfaces/Rule';
 import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
 import { map } from 'src/angular/app/utils/interfaces/map';
 import { Observable } from 'rxjs';
 import { GeneralDiagnosisInfo } from 'src/electron/interfaces/GeneralDiagnosisInfo';
+import { AgeLeukocytosisTime } from '../../inference-rules/age-leukocytosis-time';
+import { TimeNeutrophiliaAge } from '../../inference-rules/time-neutrophilia-age';
 
 @Injectable()
 export class InferenceService {
 
   private rulesApi;
-  private currentInferenceRule: InferenceRule = null;
   private infereceRules: InferenceRuleConstructor[] = [
     AgeLeukocytosisTime,
+    TimeNeutrophiliaAge,
   ];
 
   constructor(private electronService: ElectronService) {
@@ -44,27 +45,32 @@ export class InferenceService {
     const result: GeneralDiagnosisInfo[] = [];
 
     Object.keys(criteria).forEach((cretiri) => {
-      const diagnosisInfo: DiagnosisInfo[] = criteria[cretiri];
-      const diagnosis: string = diagnosisInfo.reduce((prev: DiagnosisInfo, curr: DiagnosisInfo) => {
-        return prev.count > curr.count ? prev : curr;
-      }, diagnosisInfo[0])._id;
+      const diagnosisInfo: DiagnosisInfo[] = [...criteria[cretiri]].sort((l, r) => r.count - l.count);
 
-      if (!temp[diagnosis]) {
-        temp[diagnosis] = {
-          diagnosis,
-          count: 0,
-          criteriaName: [],
-        };
+      if (diagnosisInfo.length) {
+        const max: number = diagnosisInfo[0].count;
+
+        for (let i = 0; i < diagnosisInfo.length && max === diagnosisInfo[i].count; i++) {
+          const diagnosisName: string = diagnosisInfo[i]._id;
+
+          if (!temp[diagnosisName]) {
+            temp[diagnosisName] = {
+              diagnosis: diagnosisName,
+              count: 0,
+              criteriaName: [],
+            };
+          }
+
+          temp[diagnosisName].count += 1;
+          temp[diagnosisName].criteriaName.push(cretiri);
+        }
       }
-
-      temp[diagnosis].count += 1;
-      temp[diagnosis].criteriaName.push(cretiri);
     });
 
     Object.keys(temp).forEach((d) => {
       result.push(temp[d]);
     });
 
-    return result.sort((l: GeneralDiagnosisInfo, r: GeneralDiagnosisInfo) => l.count - r.count);
+    return result.sort((l: GeneralDiagnosisInfo, r: GeneralDiagnosisInfo) => r.count - l.count);
   }
 }

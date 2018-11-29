@@ -61,7 +61,6 @@ export class DiagnosticPageComponent implements OnInit {
           const d = this.inferenceEngine.getGeneralInfo(result);
           this.diagnosticInfo = result;
           this.general = d;
-          console.log(d);
 
           this.loading = false;
         }

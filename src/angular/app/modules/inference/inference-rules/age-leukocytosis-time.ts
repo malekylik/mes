@@ -7,7 +7,7 @@ export class AgeLeukocytosisTime extends BaseInferenceRule {
         return "Age-Leukocytosis-Time";
     }
 
-    protected getMathcher(rulesDb: any, rule: Rule): map<any> {
+    protected async getMathcher(rulesDb: any, rule: Rule): Promise<map<any>> {
         return {
             "$match": {
                 age: rule.age,
