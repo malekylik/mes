@@ -15,7 +15,7 @@
 
       <tr class="info-table__row" *ngFor="let value of info.value">
         <td class="row__cell">{{value._id}}</td>
-        <td class="row__cell">{{getRules(value.rules)}}</td>
+        <td class="row__cell">{{value.rules | arrayToString: "name"}}</td>
         <td class="row__cell">{{value.count}}</td>
       </tr>
     </table>

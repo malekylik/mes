@@ -21,6 +21,7 @@ import { IndeterminateProgressSpinnerComponent } from './components/indeterminat
 import { LoadingDirective } from './directives/loading.directive';
 import { TabNavComponent } from './components/tab-nav/tab-nav.component';
 import { HeaderComponent } from './components/header/header.component';
+import { ArrayToStringPipe } from './pipes/array-to-string/array-to-string.pipe';
 
 @NgModule({
   imports: [
@@ -34,8 +35,9 @@ import { HeaderComponent } from './components/header/header.component';
     AmountComponent,
     IndeterminateProgressSpinnerComponent,
     HeaderComponent,
-    LoadingDirective,
     TabNavComponent,
+    LoadingDirective,
+    ArrayToStringPipe,
     BrowserAnimationsModule,
     MatListModule,
     MatFormFieldModule,
@@ -58,6 +60,7 @@ import { HeaderComponent } from './components/header/header.component';
     LoadingDirective,
     TabNavComponent,
     HeaderComponent,
+    ArrayToStringPipe,
   ],
   entryComponents: [IndeterminateProgressSpinnerComponent],
 })

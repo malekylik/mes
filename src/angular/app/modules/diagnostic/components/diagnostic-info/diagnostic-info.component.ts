@@ -3,7 +3,6 @@ import { Sort } from '@angular/material';
 
 import { map } from 'src/angular/app/utils/interfaces/map';
 import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
-import { Rule } from 'src/electron/interfaces/Rule';
 import { GeneralDiagnosisInfo } from 'src/electron/interfaces/GeneralDiagnosisInfo';
 
 @Component({
@@ -31,20 +30,6 @@ export class DiagnosticInfoComponent implements OnInit {
     }
 
     this.step = index;
-  }
-
-  getRules(rules: Partial<Rule[]>): string {
-    let result: string = '';
-
-    for (let i = 0; i < rules.length; i++) {
-      if (i !== 0) {
-        result += ',';
-      }
-
-      result += ` ${rules[i].name}`;
-    }
-
-    return result.trim();
   }
 
   sortData(sort: Sort, ruleName: string) {
