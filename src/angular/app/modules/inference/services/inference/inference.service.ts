@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { GeneralDiagnosisInfo } from 'src/electron/interfaces/GeneralDiagnosisInfo';
 import { AgeLeukocytosisTime } from '../../inference-rules/age-leukocytosis-time';
 import { TimeNeutrophiliaAge } from '../../inference-rules/time-neutrophilia-age';
+import { TimeLymphocytosisAge } from '../../inference-rules/time-lymphocytosis-age';
 
 @Injectable()
 export class InferenceService {
@@ -18,6 +19,7 @@ export class InferenceService {
   private infereceRules: InferenceRuleConstructor[] = [
     AgeLeukocytosisTime,
     TimeNeutrophiliaAge,
+    TimeLymphocytosisAge,
   ];
 
   constructor(private electronService: ElectronService) {
