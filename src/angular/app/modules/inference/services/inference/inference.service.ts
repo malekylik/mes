@@ -8,10 +8,11 @@ import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
 import { map } from 'src/angular/app/utils/interfaces/map';
 import { Observable } from 'rxjs';
 import { GeneralDiagnosisInfo } from 'src/electron/interfaces/GeneralDiagnosisInfo';
-import { AgeLeukocytosisTime } from '../../inference-rules/age-leukocytosis-time';
-import { TimeNeutrophiliaAge } from '../../inference-rules/time-neutrophilia-age';
-import { TimeLymphocytosisAge } from '../../inference-rules/time-lymphocytosis-age';
-import { TemperatureTimeLeukocytosis } from '../../inference-rules/temperature-time-leukocytosis';
+import { AgeLeukocytosisTime } from '../../inference-rules/criterions/age-leukocytosis-time';
+import { TimeNeutrophiliaAge } from '../../inference-rules/criterions/time-neutrophilia-age';
+import { TimeLymphocytosisAge } from '../../inference-rules/criterions/time-lymphocytosis-age';
+import { TemperatureTimeLeukocytosis } from '../../inference-rules/criterions/temperature-time-leukocytosis';
+import { TemperatureTimeAge } from '../../inference-rules/criterions/temperature-time-age';
 
 @Injectable()
 export class InferenceService {
@@ -22,6 +23,7 @@ export class InferenceService {
     TimeNeutrophiliaAge,
     TimeLymphocytosisAge,
     TemperatureTimeLeukocytosis,
+    TemperatureTimeAge,
   ];
 
   constructor(private electronService: ElectronService) {

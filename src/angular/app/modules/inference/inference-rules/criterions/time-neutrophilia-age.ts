@@ -1,6 +1,6 @@
 import { Cursor } from 'mongodb';
 
-import { BaseInferenceRule } from './base-inference-rule';
+import { BaseInferenceRule } from '../base-inference-rule';
 import { Rule } from 'src/electron/interfaces/Rule';
 import { map } from 'src/angular/app/utils/interfaces/map';
 
@@ -24,11 +24,9 @@ export class TimeNeutrophiliaAge extends BaseInferenceRule {
         }
 
         return {
-            '$match': {
-                age: rule.age,
-                t: rule.t,
-                'oak.nf': nfMatch,
-            }
+            age: rule.age,
+            t: rule.t,
+            'oak.nf': nfMatch,
         };
     }
 }

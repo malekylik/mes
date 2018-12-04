@@ -8,7 +8,9 @@ import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
 export abstract class BaseInferenceRule implements InferenceRule {
     async inference(rulesDb: any, rule: Rule): Promise<DiagnosisInfo[]> {
         const cursor: Cursor = await rulesDb.aggregate([
-            await this.getMathcher(rulesDb, rule),
+            {
+                '$match': await this.getMathcher(rulesDb, rule),
+            },
             {
                 '$group': {
                     _id: '$diagnosis',
