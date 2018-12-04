@@ -13,6 +13,7 @@ import { TimeNeutrophiliaAge } from '../../inference-rules/criterions/time-neutr
 import { TimeLymphocytosisAge } from '../../inference-rules/criterions/time-lymphocytosis-age';
 import { TemperatureTimeLeukocytosis } from '../../inference-rules/criterions/temperature-time-leukocytosis';
 import { TemperatureTimeAge } from '../../inference-rules/criterions/temperature-time-age';
+import { TemperatureTimeNeutrophilia } from '../../inference-rules/criterions/temperature-time-neutrophilia';
 
 @Injectable()
 export class InferenceService {
@@ -24,6 +25,7 @@ export class InferenceService {
     TimeLymphocytosisAge,
     TemperatureTimeLeukocytosis,
     TemperatureTimeAge,
+    TemperatureTimeNeutrophilia,
   ];
 
   constructor(private electronService: ElectronService) {
@@ -32,18 +34,6 @@ export class InferenceService {
 
   inference(rule: Rule): Observable<map<DiagnosisInfo[]>> {
     return from(this.asyncInference(rule));
-  }
-
-  private async asyncInference(rule: Rule): Promise<map<DiagnosisInfo[]>> {
-    const result: map<DiagnosisInfo[]> = {};
-
-    for (let C of this.infereceRules) {
-      const inferenceRule: InferenceRule = new C();
-      result[inferenceRule.toString()] = await inferenceRule.inference(this.rulesApi, rule);
-
-    }
-
-    return result;
   }
 
   getGeneralInfo(criteria: map<DiagnosisInfo[]>): GeneralDiagnosisInfo[] {
@@ -78,5 +68,16 @@ export class InferenceService {
     });
 
     return result.sort((l: GeneralDiagnosisInfo, r: GeneralDiagnosisInfo) => r.count - l.count);
+  }
+
+  private async asyncInference(rule: Rule): Promise<map<DiagnosisInfo[]>> {
+    const result: map<DiagnosisInfo[]> = {};
+
+    for (let C of this.infereceRules) {
+      const inferenceRule: InferenceRule = new C();
+      result[inferenceRule.toString()] = await inferenceRule.inference(this.rulesApi, rule);
+    }
+
+    return result;
   }
 }
