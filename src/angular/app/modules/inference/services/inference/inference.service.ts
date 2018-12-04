@@ -14,6 +14,7 @@ import { TimeLymphocytosisAge } from '../../inference-rules/criterions/time-lymp
 import { TemperatureTimeLeukocytosis } from '../../inference-rules/criterions/temperature-time-leukocytosis';
 import { TemperatureTimeAge } from '../../inference-rules/criterions/temperature-time-age';
 import { TemperatureTimeNeutrophilia } from '../../inference-rules/criterions/temperature-time-neutrophilia';
+import { TemperatureTimeLymphocytosis } from '../../inference-rules/criterions/temperature-time-lymphocytosis';
 
 @Injectable()
 export class InferenceService {
@@ -26,6 +27,7 @@ export class InferenceService {
     TemperatureTimeLeukocytosis,
     TemperatureTimeAge,
     TemperatureTimeNeutrophilia,
+    TemperatureTimeLymphocytosis,
   ];
 
   constructor(private electronService: ElectronService) {
