@@ -38,9 +38,7 @@ export class EditRulePageComponent implements OnInit, OnDestroy {
     const ID: string = 'id';
 
     this.activatedRoute.params
-      .pipe(
-        takeUntil(this.unsubscribe$),
-      )
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         const id: string = params[ID] || null;
 

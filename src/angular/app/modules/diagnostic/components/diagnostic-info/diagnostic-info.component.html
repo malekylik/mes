@@ -1,0 +1,49 @@
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let info of diagnosticInfo | keyvalue; index as i" [expanded]="step === i" (opened)="setStep(i, info.key)"
+    hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{info.key}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <table class="panel__info-table" matSort (matSortChange)="sortData($event, info.key)">
+      <tr class="info-table__row">
+        <th class="row__cell" mat-sort-header="diagnosis" disabled>Диагноз</th>
+        <th class="row__cell" mat-sort-header="rules" disabled>Правила</th>
+        <th class="row__cell" mat-sort-header="count">Количесвто</th>
+      </tr>
+
+      <tr class="info-table__row" *ngFor="let value of info.value">
+        <td class="row__cell">{{value._id}}</td>
+        <td class="row__cell">{{value.rules | arrayToString: "name"}}</td>
+        <td class="row__cell">{{value.count}}</td>
+      </tr>
+    </table>
+  </mat-expansion-panel>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Общая
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <table mat-table class="panel__info-table" [dataSource]="general">
+      <ng-container matColumnDef="diagnosis">
+        <th class="row__cell" mat-header-cell *matHeaderCellDef> Диагноз </th>
+        <td class="row__cell" mat-cell *matCellDef="let element"> {{element.diagnosis}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="criteriaName">
+        <th class="row__cell" mat-header-cell *matHeaderCellDef> Критерии </th>
+        <td class="row__cell" mat-cell *matCellDef="let element"> {{element.criteriaName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="count">
+        <th class="row__cell" mat-header-cell *matHeaderCellDef> Количесвто </th>
+        <td class="row__cell" mat-cell *matCellDef="let element"> {{element.count}} </td>
+      </ng-container>
+
+      <tr class="info-table__row" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="info-table__row" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-expansion-panel>
+</mat-accordion>

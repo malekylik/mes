@@ -6,6 +6,7 @@ import {
   TemplateRef,
   ComponentFactory,
   ComponentRef,
+  OnInit,
 } from '@angular/core';
 
 import { IndeterminateProgressSpinnerComponent } from '../components/indeterminate-progress-spinner/indeterminate-progress-spinner.component';
@@ -13,9 +14,9 @@ import { IndeterminateProgressSpinnerComponent } from '../components/indetermina
 @Directive({
   selector: '[appLoading]'
 })
-export class LoadingDirective {
+export class LoadingDirective implements OnInit {
 
-  @Input('appLoadingDiameter') diameter: number = 100;
+  @Input('appLoadingDiameter') diameter: number;
   @Input('appLoadingColor') color: string = 'primary';
   @Input('appLoading') set ifLoading(val: boolean) {
     this.vc.clear();
@@ -24,6 +25,10 @@ export class LoadingDirective {
       const componentRef: ComponentRef<IndeterminateProgressSpinnerComponent> =
         this.vc.createComponent(this.loadingFactory);
 
+      if (this.width) {
+        componentRef.location.nativeElement.firstElementChild.style.width = `${this.width}px`;
+      }
+
       componentRef.instance.diameter = this.diameter;
       componentRef.instance.color = this.color;
     } else {
@@ -31,6 +36,7 @@ export class LoadingDirective {
     }
   }
 
+  private width: number;
   private loadingFactory: ComponentFactory<IndeterminateProgressSpinnerComponent>;
 
   constructor(
@@ -41,4 +47,19 @@ export class LoadingDirective {
     this.loadingFactory = this.resolver.resolveComponentFactory(IndeterminateProgressSpinnerComponent);
   }
 
+  ngOnInit() {
+    if (!this.diameter) {
+      const ref = this.vc.element.nativeElement.parentElement.offsetParent;
+
+      const style = getComputedStyle(ref);
+      let width = ref.clientWidth;
+      let height = ref.clientHeight;
+
+      width -= parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+      height -= parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+
+      this.width = width;
+      this.diameter = height;
+    }
+  }
 }

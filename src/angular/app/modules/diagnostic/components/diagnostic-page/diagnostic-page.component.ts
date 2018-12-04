@@ -6,6 +6,11 @@ import { RuleFormFields, DiagnosticFormFields, OAKFormFields } from '../../../ru
 import { Range } from 'src/angular/app/utils/range';
 import { FormOption } from 'src/angular/app/utils/interfaces/form-option';
 import { AGES, TS, LS, TIMES, SEXES } from '../../../rule/constants';
+import { InferenceService } from '../../../inference/services/inference/inference.service';
+import { BaseRule } from 'src/electron/interfaces/BaseRule';
+import { map } from 'src/angular/app/utils/interfaces/map';
+import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
+import { GeneralDiagnosisInfo } from 'src/electron/interfaces/GeneralDiagnosisInfo';
 
 @Component({
   selector: 'app-diagnostic-page',
@@ -22,9 +27,13 @@ export class DiagnosticPageComponent implements OnInit {
   ts: Range[] = TIMES;
   sexes: FormOption[] = SEXES;
   rule: Rule = null;
+  loading: boolean = false;
+  diagnosticInfo: map<DiagnosisInfo[]> = null;
+  general: GeneralDiagnosisInfo[] = null;
 
   constructor(
     private fb: FormBuilder,
+    private inferenceEngine: InferenceService,
   ) { }
 
   ngOnInit() {
@@ -33,7 +42,29 @@ export class DiagnosticPageComponent implements OnInit {
 
   onDiagnost(): void {
     if (this.diagnosticFormGroup.valid) {
-      console.log('diagnostic');
+      this.loading = true;
+      this.diagnosticInfo = null;
+      
+      const formValue: any = this.diagnosticFormGroup.value;
+      const rule: Rule = new BaseRule(
+        '',
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.age],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.sex],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.T],
+        formValue[RuleFormFields.diagnosis],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.oak],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.time],
+      );
+
+      this.inferenceEngine.inference(rule).subscribe(
+        (result: map<DiagnosisInfo[]>) => {
+          const d = this.inferenceEngine.getGeneralInfo(result);
+          this.diagnosticInfo = result;
+          this.general = d;
+
+          this.loading = false;
+        }
+      );
     }
   }
 

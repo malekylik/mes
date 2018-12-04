@@ -12,12 +12,16 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 import { AmountComponent } from './components/amount/amount.component';
 import { IndeterminateProgressSpinnerComponent } from './components/indeterminate-progress-spinner/indeterminate-progress-spinner.component';
 import { LoadingDirective } from './directives/loading.directive';
 import { TabNavComponent } from './components/tab-nav/tab-nav.component';
 import { HeaderComponent } from './components/header/header.component';
+import { ArrayToStringPipe } from './pipes/array-to-string/array-to-string.pipe';
 
 @NgModule({
   imports: [
@@ -31,8 +35,9 @@ import { HeaderComponent } from './components/header/header.component';
     AmountComponent,
     IndeterminateProgressSpinnerComponent,
     HeaderComponent,
-    LoadingDirective,
     TabNavComponent,
+    LoadingDirective,
+    ArrayToStringPipe,
     BrowserAnimationsModule,
     MatListModule,
     MatFormFieldModule,
@@ -45,6 +50,9 @@ import { HeaderComponent } from './components/header/header.component';
     MatIconModule,
     MatMenuModule,
     MatTabsModule,
+    MatExpansionModule,
+    MatSortModule,
+    MatTableModule,
   ],
   declarations: [
     AmountComponent,
@@ -52,6 +60,7 @@ import { HeaderComponent } from './components/header/header.component';
     LoadingDirective,
     TabNavComponent,
     HeaderComponent,
+    ArrayToStringPipe,
   ],
   entryComponents: [IndeterminateProgressSpinnerComponent],
 })

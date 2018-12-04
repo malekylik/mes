@@ -10,3 +10,9 @@
 .controls {
     margin-top: 10px;
 }
+
+.diagnostic-info {
+    margin-bottom: 10px;
+
+    @include page-width();
+}
