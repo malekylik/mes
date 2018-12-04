@@ -11,6 +11,7 @@ import { GeneralDiagnosisInfo } from 'src/electron/interfaces/GeneralDiagnosisIn
 import { AgeLeukocytosisTime } from '../../inference-rules/age-leukocytosis-time';
 import { TimeNeutrophiliaAge } from '../../inference-rules/time-neutrophilia-age';
 import { TimeLymphocytosisAge } from '../../inference-rules/time-lymphocytosis-age';
+import { TemperatureTimeLeukocytosis } from '../../inference-rules/temperature-time-leukocytosis';
 
 @Injectable()
 export class InferenceService {
@@ -20,6 +21,7 @@ export class InferenceService {
     AgeLeukocytosisTime,
     TimeNeutrophiliaAge,
     TimeLymphocytosisAge,
+    TemperatureTimeLeukocytosis,
   ];
 
   constructor(private electronService: ElectronService) {

@@ -10,15 +10,15 @@ export abstract class BaseInferenceRule implements InferenceRule {
         const cursor: Cursor = await rulesDb.aggregate([
             await this.getMathcher(rulesDb, rule),
             {
-                "$group": {
-                    _id: "$diagnosis",
+                '$group': {
+                    _id: '$diagnosis',
                     rules: {
-                        "$push": {
-                            _id: "$_id",
-                            name: "$name",
+                        '$push': {
+                            _id: '$_id',
+                            name: '$name',
                         }
                     },
-                    count: { "$sum": 1 },
+                    count: { '$sum': 1 },
                 }
             }
         ]);
