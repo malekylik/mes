@@ -16,7 +16,9 @@
     </mat-form-field>
   </div>
   <div class="controls">
-      <button mat-raised-button class="controls__save-button" color="primary" type="submit">Сохранить</button>
-      <button mat-raised-button type="button" routerLink="../">Отмена</button>
+      <button [disabled]="isSaving" mat-raised-button mat-raised-button class="controls__save-button" color="primary" type="submit">
+          <span *appLoading="!isSaving; color: 'accent'">Сохранить</span>
+      </button>
+      <button mat-raised-button type="button" routerLink="../">Назад</button>
   </div>
 </form>
