@@ -12,6 +12,7 @@ export class TemperatureTimeNeutrophilia extends BaseInferenceRule {
     protected async getMathcher(rulesDb: any, rule: Rule): Promise<map<any>> {
         const minCursor: Cursor<{ nf: number }> = await rulesDb.aggregate([{ '$match': { T: rule.T, t: rule.t } }, { '$group': { _id: null, nf: { '$min': '$oak.nf' } } }]);
         const maxCursor: Cursor<{ nf: number }> = await rulesDb.aggregate([{ '$match': { T: rule.T, t: rule.t } }, { '$group': { _id: null, nf: { '$max': '$oak.nf' } } }]);
+        const { oak: { nf } } = rule;
 
         const nfMatch: object = {};
 
@@ -23,10 +24,12 @@ export class TemperatureTimeNeutrophilia extends BaseInferenceRule {
             nfMatch['$lte'] = (await maxCursor.next()).nf;
         }
 
+        const inRange: boolean = (nf >= nfMatch['$gte'] && nf <= nfMatch['$lte']);
+
         return {
             T: rule.T,
             t: rule.t,
-            'oak.nf': nfMatch,
+            'oak.nf': inRange ? nfMatch : NaN,
         };
     }
 }

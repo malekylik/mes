@@ -4,14 +4,14 @@ import { BaseInferenceRule } from '../base-inference-rule';
 import { Rule } from 'src/electron/interfaces/Rule';
 import { map } from 'src/angular/app/utils/interfaces/map';
 
-export class TimeNeutrophiliaAge extends BaseInferenceRule {
+export class VomitingTimeNeutrophilia extends BaseInferenceRule {
     toString(): string {
-        return 'Time-Neutrophilia-Age';
+        return 'Vomiting-Time-Neutrophilia';
     }
 
     protected async getMathcher(rulesDb: any, rule: Rule): Promise<map<any>> {
-        const minCursor: Cursor<{ nf: number }> = await rulesDb.aggregate([{ '$match': { age: rule.age, t: rule.t } }, { '$group': { _id: null, nf: { '$min': '$oak.nf' } } }]);
-        const maxCursor: Cursor<{ nf: number }> = await rulesDb.aggregate([{ '$match': { age: rule.age, t: rule.t } }, { '$group': { _id: null, nf: { '$max': '$oak.nf' } } }]);
+        const minCursor: Cursor<{ nf: number }> = await rulesDb.aggregate([{ '$match': { vomiting: rule.vomiting, t: rule.t } }, { '$group': { _id: null, nf: { '$min': '$oak.nf' } } }]);
+        const maxCursor: Cursor<{ nf: number }> = await rulesDb.aggregate([{ '$match': { vomiting: rule.vomiting, t: rule.t } }, { '$group': { _id: null, nf: { '$max': '$oak.nf' } } }]);
         const { oak: { nf } } = rule;
 
         const nfMatch: object = {};
@@ -27,7 +27,7 @@ export class TimeNeutrophiliaAge extends BaseInferenceRule {
         const inRange: boolean = (nf >= nfMatch['$gte'] && nf <= nfMatch['$lte']);
 
         return {
-            age: rule.age,
+            vomiting: rule.vomiting,
             t: rule.t,
             'oak.nf': inRange ? nfMatch : NaN,
         };

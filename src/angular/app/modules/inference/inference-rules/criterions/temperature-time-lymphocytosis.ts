@@ -12,6 +12,7 @@ export class TemperatureTimeLymphocytosis extends BaseInferenceRule {
     protected async getMathcher(rulesDb: any, rule: Rule): Promise<map<any>> {
         const minCursor: Cursor<{ lf: number }> = await rulesDb.aggregate([{ '$match': { T: rule.T, t: rule.t } }, { '$group': { _id: null, lf: { '$min': '$oak.lf' } } }]);
         const maxCursor: Cursor<{ lf: number }> = await rulesDb.aggregate([{ '$match': { T: rule.T, t: rule.t } }, { '$group': { _id: null, lf: { '$max': '$oak.lf' } } }]);
+        const { oak: { lf } } = rule;
 
         const lfMatch: object = {};
 
@@ -23,10 +24,12 @@ export class TemperatureTimeLymphocytosis extends BaseInferenceRule {
             lfMatch['$lte'] = (await maxCursor.next()).lf;
         }
 
+        const inRange: boolean = (lf >= lfMatch['$gte'] && lf <= lfMatch['$lte']);
+
         return {
             T: rule.T,
             t: rule.t,
-            'oak.lf': lfMatch,
+            'oak.lf': inRange ? lfMatch : NaN,
         };
     }
 }
