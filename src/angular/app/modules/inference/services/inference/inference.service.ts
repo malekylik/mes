@@ -16,6 +16,7 @@ import { TemperatureTimeAge } from '../../inference-rules/criterions/temperature
 import { TemperatureTimeNeutrophilia } from '../../inference-rules/criterions/temperature-time-neutrophilia';
 import { TemperatureTimeLymphocytosis } from '../../inference-rules/criterions/temperature-time-lymphocytosis';
 import { VomitingTimeAge } from '../../inference-rules/criterions/vomiting-time-age';
+import { VomitingTimeTemperature } from '../../inference-rules/criterions/vomiting-time-temperature';
 
 @Injectable()
 export class InferenceService {
@@ -30,6 +31,7 @@ export class InferenceService {
     new TemperatureTimeNeutrophilia(),
     new TemperatureTimeLymphocytosis(),
     new VomitingTimeAge(),
+    new VomitingTimeTemperature(),
   ];
 
   constructor(private electronService: ElectronService) {
