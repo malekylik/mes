@@ -15,7 +15,8 @@ import { RuleFormFields, DiagnosticFormFields, OAKFormFields} from '../../consta
 export class RuleComponent implements OnInit {
 
   ruleFormGroup: FormGroup;
-
+  
+  @Input() isSaving: boolean = false;
   @Input() rule: Rule = null;
   @Input() ages: Range[] = [];
   @Input() Ts: Range[] = [];

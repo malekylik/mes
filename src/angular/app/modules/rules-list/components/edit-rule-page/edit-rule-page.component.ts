@@ -18,6 +18,8 @@ import { AGES, TS, LS, TIMES, SEXES, VOMITINGS } from '../../../rule/constants';
 })
 export class EditRulePageComponent implements OnInit, OnDestroy {
 
+  isSaving: boolean = false;
+
   ages: Range[] = AGES;
   Ts: Range[] = TS;
   Ls: Range[] = LS;
@@ -86,7 +88,13 @@ export class EditRulePageComponent implements OnInit, OnDestroy {
       updateRule$ = this.ruleService.insertRule(rule);
     }
 
-    updateRule$.subscribe(() => { console.log('saved') });
+    this.isSaving = true;
+    updateRule$
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(() => {
+      this.isSaving = false;
+      console.log('saved');
+     });
   }
 
 }
