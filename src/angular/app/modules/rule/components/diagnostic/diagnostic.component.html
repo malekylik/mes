@@ -29,6 +29,14 @@
     </mat-select>
     <mat-hint>в часах</mat-hint>
   </mat-form-field>
+  <mat-form-field>
+    <mat-select formControlName="vomiting" placeholder="Рвота">
+      <mat-option *ngFor="let vomiting of vomitings" [value]="vomiting.toString()">
+        {{vomiting.inHumanLanguage}}
+      </mat-option>
+    </mat-select>
+    <mat-hint></mat-hint>
+  </mat-form-field>
   <fieldset class="fieldset" formGroupName="oak">
     <legend>ОАК</legend>
     <mat-form-field>

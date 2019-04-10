@@ -17,6 +17,7 @@ export class DiagnosticComponent implements OnInit {
   @Input() Ts: Range[] = [];
   @Input() Ls: Range[] = [];
   @Input() ts: Range[] = [];
+  @Input() vomitings: Range[] = [];
   @Input() sexes: FormOption[] = [];
 
   constructor() { }
