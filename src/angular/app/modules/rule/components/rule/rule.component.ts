@@ -21,6 +21,7 @@ export class RuleComponent implements OnInit {
   @Input() Ts: Range[] = [];
   @Input() Ls: Range[] = [];
   @Input() ts: Range[] = [];
+  @Input() vomitings: Range[] = [];
   @Input() sexes: FormOption[] = [];
 
   @Output() save: EventEmitter<Rule> = new EventEmitter();
@@ -41,6 +42,7 @@ export class RuleComponent implements OnInit {
         formValue[RuleFormFields.diagnostic][DiagnosticFormFields.age],
         formValue[RuleFormFields.diagnostic][DiagnosticFormFields.sex],
         formValue[RuleFormFields.diagnostic][DiagnosticFormFields.T],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.vomiting],
         formValue[RuleFormFields.diagnosis],
         formValue[RuleFormFields.diagnostic][DiagnosticFormFields.oak],
         formValue[RuleFormFields.diagnostic][DiagnosticFormFields.time],
@@ -59,6 +61,7 @@ export class RuleComponent implements OnInit {
         [DiagnosticFormFields.T]: [this.rule.T, Validators.required],
         [DiagnosticFormFields.sex]: [this.rule.sex, Validators.required],
         [DiagnosticFormFields.time]: [this.rule.t, Validators.required],
+        [DiagnosticFormFields.vomiting]: [this.rule.vomiting, Validators.required],
         [DiagnosticFormFields.oak]: this.fb.group({
           [OAKFormFields.leukocytosis]: [this.rule.oak.L, Validators.required],
           [OAKFormFields.neutrophilia]: [this.rule.oak.nf, Validators.required],

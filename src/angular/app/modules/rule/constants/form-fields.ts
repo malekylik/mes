@@ -10,6 +10,7 @@ enum DiagnosticFormFields {
   time = 'time',
   T = 'T',
   oak = 'oak',
+  vomiting = 'vomiting',
 }
 
 enum OAKFormFields {

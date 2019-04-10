@@ -14,6 +14,7 @@ export class BaseRule implements Rule {
         public age: string,
         public sex: string,
         public T: string,
+        public vomiting: string,
         public diagnosis: string,
         public oak: OAK,
         time: string,

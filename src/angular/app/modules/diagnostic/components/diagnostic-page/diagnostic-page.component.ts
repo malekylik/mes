@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Rule } from 'src/electron/interfaces/Rule';
-import { RuleFormFields, DiagnosticFormFields, OAKFormFields } from '../../../rule/constants';
 import { Range } from 'src/angular/app/utils/range';
 import { FormOption } from 'src/angular/app/utils/interfaces/form-option';
-import { AGES, TS, LS, TIMES, SEXES } from '../../../rule/constants';
+import { RuleFormFields, DiagnosticFormFields, OAKFormFields } from '../../../rule/constants';
+import { AGES, TS, LS, TIMES, SEXES, VOMITINGS } from '../../../rule/constants';
 import { InferenceService } from '../../../inference/services/inference/inference.service';
 import { BaseRule } from 'src/electron/interfaces/BaseRule';
 import { map } from 'src/angular/app/utils/interfaces/map';
@@ -25,6 +25,7 @@ export class DiagnosticPageComponent implements OnInit {
   Ts: Range[] = TS;
   Ls: Range[] = LS;
   ts: Range[] = TIMES;
+  vomitings: Range[] = VOMITINGS;
   sexes: FormOption[] = SEXES;
   rule: Rule = null;
   loading: boolean = false;
@@ -45,12 +46,14 @@ export class DiagnosticPageComponent implements OnInit {
       this.loading = true;
       this.diagnosticInfo = null;
       
+      const ruleName: string = '';
       const formValue: any = this.diagnosticFormGroup.value;
       const rule: Rule = new BaseRule(
-        '',
+        ruleName,
         formValue[RuleFormFields.diagnostic][DiagnosticFormFields.age],
         formValue[RuleFormFields.diagnostic][DiagnosticFormFields.sex],
         formValue[RuleFormFields.diagnostic][DiagnosticFormFields.T],
+        formValue[RuleFormFields.diagnostic][DiagnosticFormFields.vomiting],
         formValue[RuleFormFields.diagnosis],
         formValue[RuleFormFields.diagnostic][DiagnosticFormFields.oak],
         formValue[RuleFormFields.diagnostic][DiagnosticFormFields.time],
@@ -75,6 +78,7 @@ export class DiagnosticPageComponent implements OnInit {
         [DiagnosticFormFields.T]: [null, Validators.required],
         [DiagnosticFormFields.sex]: [null, Validators.required],
         [DiagnosticFormFields.time]: [null, Validators.required],
+        [DiagnosticFormFields.vomiting]: [null, Validators.required],
         [DiagnosticFormFields.oak]: this.fb.group({
           [OAKFormFields.leukocytosis]: [null, Validators.required],
           [OAKFormFields.neutrophilia]: [null, Validators.required],

@@ -9,7 +9,7 @@ import { setFactory } from 'src/angular/app/utils/set-factory';
 import { Range } from 'src/angular/app/utils/range';
 import { FormOption } from 'src/angular/app/utils/interfaces/form-option';
 import { RuleService } from '../../../core/services/rule/rule.service';
-import { AGES, TS, LS, TIMES, SEXES } from '../../../rule/constants';
+import { AGES, TS, LS, TIMES, SEXES, VOMITINGS } from '../../../rule/constants';
 
 @Component({
   selector: 'app-edit-rule-page',
@@ -22,6 +22,7 @@ export class EditRulePageComponent implements OnInit, OnDestroy {
   Ts: Range[] = TS;
   Ls: Range[] = LS;
   ts: Range[] = TIMES;
+  vomitings: Range[] = VOMITINGS;
   sexes: FormOption[] = SEXES;
 
   rule: Rule = null;
@@ -50,6 +51,7 @@ export class EditRulePageComponent implements OnInit, OnDestroy {
             this.rule = rule; 
           });
         } else {
+          const diagnosis: string = '';
           this.heading = 'Создание:';
 
           this.rule = new BaseRule(
@@ -57,7 +59,8 @@ export class EditRulePageComponent implements OnInit, OnDestroy {
             this.ages[0].toString(),
             this.sexes[0].value,
             this.Ts[0].toString(),
-            '',
+            this.vomitings[0].toString(),
+            diagnosis,
             {
               L: this.Ls[0].toString(),
               nf: 0,

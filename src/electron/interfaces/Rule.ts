@@ -9,6 +9,7 @@ export interface Rule {
     sex: string,
     t: string,
     T: string,
+    vomiting: string,
     oak: OAK,
     diagnosis: string,
     creationTime: number,
