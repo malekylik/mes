@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { from } from 'rxjs';
 
-import { InferenceRule, InferenceRuleConstructor } from '../../inference-rules/inference-rule.model';
+import { InferenceRule } from '../../inference-rules/inference-rule.model';
 import { Rule } from 'src/electron/interfaces/Rule';
 import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
 import { map } from 'src/angular/app/utils/interfaces/map';
@@ -15,19 +15,21 @@ import { TemperatureTimeLeukocytosis } from '../../inference-rules/criterions/te
 import { TemperatureTimeAge } from '../../inference-rules/criterions/temperature-time-age';
 import { TemperatureTimeNeutrophilia } from '../../inference-rules/criterions/temperature-time-neutrophilia';
 import { TemperatureTimeLymphocytosis } from '../../inference-rules/criterions/temperature-time-lymphocytosis';
+import { VomitingTimeAge } from '../../inference-rules/criterions/vomiting-time-age';
 
 @Injectable()
 export class InferenceService {
 
   private rulesApi;
-  private infereceRules: InferenceRuleConstructor[] = [
-    AgeLeukocytosisTime,
-    TimeNeutrophiliaAge,
-    TimeLymphocytosisAge,
-    TemperatureTimeLeukocytosis,
-    TemperatureTimeAge,
-    TemperatureTimeNeutrophilia,
-    TemperatureTimeLymphocytosis,
+  private infereceRules: InferenceRule[] = [
+    new AgeLeukocytosisTime(),
+    new TimeNeutrophiliaAge(),
+    new TimeLymphocytosisAge(),
+    new TemperatureTimeLeukocytosis(),
+    new TemperatureTimeAge(),
+    new TemperatureTimeNeutrophilia(),
+    new TemperatureTimeLymphocytosis(),
+    new VomitingTimeAge(),
   ];
 
   constructor(private electronService: ElectronService) {
@@ -75,8 +77,7 @@ export class InferenceService {
   private async asyncInference(rule: Rule): Promise<map<DiagnosisInfo[]>> {
     const result: map<DiagnosisInfo[]> = {};
 
-    for (let C of this.infereceRules) {
-      const inferenceRule: InferenceRule = new C();
+    for (let inferenceRule of this.infereceRules) {
       result[inferenceRule.toString()] = await inferenceRule.inference(this.rulesApi, rule);
     }
 
