@@ -1,0 +1,1 @@
+export const ERROR_SNACKBAR_DURATION: number = 1000;

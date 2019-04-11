@@ -3,8 +3,10 @@ import { Observable, Subject } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
 
 import { RulesListService } from '../../services/rules-list/rules-list.service';
+import { InfoMessageService } from 'src/angular/app/modules/core/services/info-message/info-message.service';
 import { Rule } from 'src/electron/interfaces/Rule';
 import { map } from 'src/angular/app/utils/interfaces/map';
+import { SOMETHING_WENT_WRONG } from 'src/angular/app/constants';
 
 @Component({
   selector: 'app-list',
@@ -25,6 +27,7 @@ export class ListComponent implements OnInit, OnDestroy {
   constructor(
     private rulesListService: RulesListService,
     private cd: ChangeDetectorRef,
+    private infoMessageService: InfoMessageService,
   ) { }
 
   ngOnInit() {
@@ -64,11 +67,17 @@ export class ListComponent implements OnInit, OnDestroy {
 
   private initTotalCount(): void {
     this.rulesListService.getCount()
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((count: number) => {
         this.rulesCount = count;
 
         this.getNext();
-      });
+      },
+        () => {
+          this.rulesCount = 0;
+          this.infoMessageService.showMessage(SOMETHING_WENT_WRONG);
+        },
+      );
   }
 
   private initRulesList(): void {
@@ -87,8 +96,10 @@ export class ListComponent implements OnInit, OnDestroy {
           this.loadMore$.complete();
         }
       },
-        () => { },
-        () => { console.log('completed'); }
+        () => {
+          this.loading = false;
+          this.infoMessageService.showMessage(SOMETHING_WENT_WRONG);
+        },
       );
   }
 }

@@ -9,7 +9,9 @@ import { setFactory } from 'src/angular/app/utils/set-factory';
 import { Range } from 'src/angular/app/utils/range';
 import { FormOption } from 'src/angular/app/utils/interfaces/form-option';
 import { RuleService } from '../../../core/services/rule/rule.service';
+import { InfoMessageService } from 'src/angular/app/modules/core/services/info-message/info-message.service';
 import { AGES, TS, LS, TIMES, SEXES, VOMITINGS } from '../../../rule/constants';
+import { SUCCESS_SAVE, SOMETHING_WENT_WRONG } from 'src/angular/app/constants';
 
 @Component({
   selector: 'app-edit-rule-page',
@@ -35,6 +37,7 @@ export class EditRulePageComponent implements OnInit, OnDestroy {
   constructor(
     private ruleService: RuleService,
     private activatedRoute: ActivatedRoute,
+    private infoMessageService: InfoMessageService,
   ) { }
 
   ngOnInit() {
@@ -93,8 +96,13 @@ export class EditRulePageComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(() => {
       this.isSaving = false;
-      console.log('saved');
-     });
+      this.infoMessageService.showMessage(SUCCESS_SAVE);
+     },
+      () => {
+        this.isSaving = false;
+        this.infoMessageService.showMessage(SOMETHING_WENT_WRONG);
+      }
+     );
   }
 
 }

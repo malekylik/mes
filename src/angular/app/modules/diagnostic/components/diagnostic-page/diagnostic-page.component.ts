@@ -7,10 +7,12 @@ import { FormOption } from 'src/angular/app/utils/interfaces/form-option';
 import { RuleFormFields, DiagnosticFormFields, OAKFormFields } from '../../../rule/constants';
 import { AGES, TS, LS, TIMES, SEXES, VOMITINGS } from '../../../rule/constants';
 import { InferenceService } from '../../../inference/services/inference/inference.service';
+import { InfoMessageService } from 'src/angular/app/modules/core/services/info-message/info-message.service';
 import { BaseRule } from 'src/electron/interfaces/BaseRule';
 import { map } from 'src/angular/app/utils/interfaces/map';
 import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
 import { GeneralDiagnosisInfo } from 'src/electron/interfaces/GeneralDiagnosisInfo';
+import { SOMETHING_WENT_WRONG } from 'src/angular/app/constants';
 
 @Component({
   selector: 'app-diagnostic-page',
@@ -35,6 +37,7 @@ export class DiagnosticPageComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private inferenceEngine: InferenceService,
+    private infoMessageService: InfoMessageService,
   ) { }
 
   ngOnInit() {
@@ -59,13 +62,18 @@ export class DiagnosticPageComponent implements OnInit {
         formValue[RuleFormFields.diagnostic][DiagnosticFormFields.time],
       );
 
-      this.inferenceEngine.inference(rule).subscribe(
+      this.inferenceEngine.inference(rule)
+      .subscribe(
         (result: map<DiagnosisInfo[]>) => {
           const d = this.inferenceEngine.getGeneralInfo(result);
           this.diagnosticInfo = result;
           this.general = d;
 
           this.loading = false;
+        },
+        () => {
+          this.loading = false;
+          this.infoMessageService.showMessage(SOMETHING_WENT_WRONG);
         }
       );
     }
