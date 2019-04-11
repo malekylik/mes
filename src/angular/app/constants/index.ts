@@ -1,3 +1,5 @@
+export * from './messages';
+
 import { TabLink } from '../interfaces/tab-link';
 
 const MAIN_TAB_LINKS: TabLink[] = [
