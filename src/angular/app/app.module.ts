@@ -10,10 +10,12 @@ import { CoreModule } from './modules/core/core.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { DiagnosticModule } from './modules/diagnostic/diagnostic.module';
 import { InferenceModule } from './modules/inference/inference.module';
+import { AuthorizationModule } from './modules/authorization/authorization.module';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,6 +25,7 @@ import { InferenceModule } from './modules/inference/inference.module';
     SharedModule,
     DiagnosticModule,
     InferenceModule,
+    AuthorizationModule,
     RouterModule.forRoot(ROUTES),
   ],
   providers: [],
