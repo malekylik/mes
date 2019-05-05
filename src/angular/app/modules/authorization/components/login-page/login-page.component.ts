@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 
+import { LoginValidator, PasswordValidator } from '../../validators'
+
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -16,8 +18,8 @@ export class LoginPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.loginControl = new FormControl('', [Validators.required]);
-    this.passwordControl = new FormControl('', [Validators.required]);
+    this.loginControl = new FormControl('', [Validators.required, LoginValidator()]);
+    this.passwordControl = new FormControl('', [Validators.required, PasswordValidator()]);
 
     this.form = new FormGroup({
       login: this.loginControl,
