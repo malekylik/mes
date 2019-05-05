@@ -10,7 +10,9 @@ import { LoginPageComponent } from './components/login-page/login-page.component
     CommonModule,
     SharedModule,
   ],
-  providers: [AuthorizationService],
+  providers: [
+    AuthorizationService,
+  ],
   declarations: [LoginPageComponent],
 })
 export class AuthorizationModule { }

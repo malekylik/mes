@@ -1,5 +1,9 @@
 <header>
-    <app-tab-nav [routeLinks]="routeLinks" [(activeLinkIndex)]="activeLinkIndex"></app-tab-nav>
+    <app-tab-nav 
+        [routeLinks]="routeLinks" 
+        [activeLinkIndex]="activeLinkIndex"
+        (activeLinkIndexChange)="changeActiveTab($event)"
+        ></app-tab-nav>
 </header>
 <main class="content">
     <router-outlet></router-outlet>

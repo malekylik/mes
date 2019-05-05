@@ -11,7 +11,6 @@ export class TabNavComponent implements OnInit {
 
   @Input() routeLinks: TabLink[] = [];
   @Input() activeLinkIndex: number = 0;
-  _activeLinkIndex: number = this.activeLinkIndex;
 
   @Output() activeLinkIndexChange = new EventEmitter<number>();
 
@@ -22,7 +21,6 @@ export class TabNavComponent implements OnInit {
 
   onIndexChanged(index: number): void {
     this.activeLinkIndexChange.emit(index);
-    this._activeLinkIndex = index;
   }
 
 }

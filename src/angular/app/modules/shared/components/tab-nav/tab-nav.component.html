@@ -1,6 +1,6 @@
 <nav mat-tab-nav-bar>
   <a mat-tab-link class="mat-tab-links__tab" *ngFor="let routeLink of routeLinks; index as i;" [routerLink]="routeLink.link"
-      [active]="_activeLinkIndex === i" (click)="onIndexChanged(i)">
+      [active]="activeLinkIndex === i" (click)="onIndexChanged(i)">
       {{routeLink.label}}
   </a>
 </nav>

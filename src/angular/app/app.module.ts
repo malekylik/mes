@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgxElectronModule } from 'ngx-electron';
-import { RouterModule } from '@angular/router'
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { ROUTES } from './app.routes';
@@ -11,11 +11,12 @@ import { SharedModule } from './modules/shared/shared.module';
 import { DiagnosticModule } from './modules/diagnostic/diagnostic.module';
 import { InferenceModule } from './modules/inference/inference.module';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
+import { AuthGuard } from './guards/auth.guard';
+import { NoAuthGuard } from './guards/no-auth.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +29,10 @@ import { AuthorizationModule } from './modules/authorization/authorization.modul
     AuthorizationModule,
     RouterModule.forRoot(ROUTES),
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    NoAuthGuard,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

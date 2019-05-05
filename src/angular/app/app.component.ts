@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { MAIN_TAB_LINKS } from './constants';
 import { TabLink } from './interfaces/tab-link';
+import { NavigationService } from './modules/core/services/navigation/navigation.service';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +10,18 @@ import { TabLink } from './interfaces/tab-link';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  routeLinks: TabLink[] = MAIN_TAB_LINKS;
-  activeLinkIndex: number = 0;
+  routeLinks: TabLink[] = this.navigation.getRouteLinks();
+  activeLinkIndex: number = this.navigation.getActiveLinkValue();
 
-  constructor() {}
+  private $activeLinkIndex: Observable<number> = this.navigation.getActiveLink();
+
+  constructor(private navigation: NavigationService) {}
 
   ngOnInit() {
+    this.$activeLinkIndex.subscribe(linkNumber => this.activeLinkIndex = linkNumber);
+  }
+
+  changeActiveTab(index: number): void {
+    this.navigation.activateLink(index);
   }
 }

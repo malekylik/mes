@@ -1,8 +1,8 @@
 <div class="login-page mat-elevation-z4">
   <header class="login-header">
-    <h2 class="login-heading" i18n="page name|header" >Login</h2>
+    <h2 class="login-heading">Login</h2>
   </header>
-  <form class="login-form" [formGroup]="form" (ngSubmit)="login()">
+  <!-- <form class="login-form" [formGroup]="form" (ngSubmit)="login()">
     <mat-form-field>
       <input matInput type="text" placeholder="Please enter login" name="login" formControlName="login" i18n-placeholder
         required>
@@ -13,5 +13,5 @@
       <mat-error>{{validationService.validate(passwordControl.errors)}}</mat-error>
     </mat-form-field>
     <button mat-button type="submit" class="login-button" i18n="action label|button" >Login</button>
-  </form>
+  </form> -->
 </div>
