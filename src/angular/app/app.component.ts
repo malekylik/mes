@@ -7,6 +7,7 @@ import { NavigationService } from './modules/core/services/navigation/navigation
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  host: { class: 'app' },
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
