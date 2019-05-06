@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 
-import { LoginValidator, PasswordValidator } from '../../validators'
+import { LoginValidator, PasswordValidator } from '../../validators';
+import { ValidationService } from '../../services/validation/validation.service';
 
 @Component({
   selector: 'app-login-page',
@@ -15,7 +16,7 @@ export class LoginPageComponent implements OnInit {
   loginControl: FormControl;
   passwordControl: FormControl;
 
-  constructor() { }
+  constructor(public validation: ValidationService) { }
 
   ngOnInit() {
     this.loginControl = new FormControl('', [Validators.required, LoginValidator()]);

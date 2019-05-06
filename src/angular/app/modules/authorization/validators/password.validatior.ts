@@ -8,6 +8,6 @@ export function PasswordValidator(): ValidatorFn {
         const password: string = control.value;
         const isValid: boolean = password === PASSWORD;
 
-        return isValid ? null : { [ValidationErrorsKeys.password]: { value: password } } ;
+        return isValid ? null : { [ValidationErrorsKeys.password]: { password } } ;
     };
 }
