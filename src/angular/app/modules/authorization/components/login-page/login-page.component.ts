@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { LoginValidator, PasswordValidator } from '../../validators';
 import { ValidationService } from '../../services/validation/validation.service';
-import { ServiceWorkerService } from 'src/angular/app/modules/core/services/service-worker/service-worker.service';
+import { IndexedDbService } from 'src/angular/app/modules/core/services/indexedb/indexed-db.service';
 
 @Component({
   selector: 'app-login-page',
@@ -19,7 +19,7 @@ export class LoginPageComponent implements OnInit {
 
   constructor(
     public validation: ValidationService,
-    private serviceWorker: ServiceWorkerService,
+    private indexedDb: IndexedDbService,
     ) { }
 
   ngOnInit() {
@@ -36,7 +36,7 @@ export class LoginPageComponent implements OnInit {
     if (this.form.valid) {
       const login: string = this.loginControl.value;
       const password: string = this.passwordControl.value;
-      this.serviceWorker.isLogged().then(isLogged => console.log('login page isLogged', isLogged));
+      this.indexedDb.isLogged().then(isLogged => console.log('login page isLogged', isLogged));
     }
   }
 

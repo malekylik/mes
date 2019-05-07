@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { CHANNEL_NAME } from 'src/angular/service-worker/constants';
-import { SeriveWorkerEvents } from 'src/angular/service-worker/constants/events-type';
 
 @Injectable()
 export class ServiceWorkerService {
@@ -11,10 +10,6 @@ export class ServiceWorkerService {
 
   constructor() {
     navigator.serviceWorker.ready.then(_ => this.sw = navigator.serviceWorker.controller);
-  }
-
-  isLogged(): Promise<boolean> {
-    return this.sendMessage(SeriveWorkerEvents.isLogged);
   }
 
   sendMessage(type: string, data?: any): Promise<any> {
