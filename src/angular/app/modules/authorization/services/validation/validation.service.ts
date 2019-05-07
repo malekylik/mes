@@ -16,11 +16,11 @@ export class ValidationService {
     } else if (errors[ValidationErrorsKeys.login]) {
       const error = errors[ValidationErrorsKeys.login];
 
-      return `${error.login} - не правильный логин`;
+      return `${error.login} - неправильный логин`;
     } else if (errors[ValidationErrorsKeys.password]) {
       const error = errors[ValidationErrorsKeys.password];
 
-      return `${error.password} - не правильный пароль`;
+      return `${error.password} - неправильный пароль`;
     }
 
     return 'Error';
