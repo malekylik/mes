@@ -36,7 +36,7 @@ export class LoginPageComponent implements OnInit {
     if (this.form.valid) {
       const login: string = this.loginControl.value;
       const password: string = this.passwordControl.value;
-      this.serviceWorker.sendMessage(login, password).then(e => console.log('login page', e));
+      this.serviceWorker.isLogged().then(isLogged => console.log('login page isLogged', isLogged));
     }
   }
 

@@ -5,11 +5,11 @@ module.exports = {
     extensions: ['.ts']
   },
   entry: {
-    main: './src/angular/service-worker.ts',
+    main: path.resolve(__dirname, path.join('src', 'angular', 'service-worker', 'service-worker.ts')),
   },
   output: {
-    filename: './src/angular/service-worker.js',
-    path: path.resolve(__dirname)
+    filename: 'service-worker.js',
+    path: path.resolve(__dirname, path.join('src', 'angular')),
   },
   devtool: 'inline-source-map',
   module: {
