@@ -7,6 +7,7 @@ import { InfoMessageService } from './services/info-message/info-message.service
 import { NavigationService } from './services/navigation/navigation.service';
 import { ServiceWorkerService } from './services/service-worker/service-worker.service';
 import { IndexedDbService } from './services/indexedb/indexed-db.service';
+import { CryptoService } from './services/crypto/crypto.service';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { IndexedDbService } from './services/indexedb/indexed-db.service';
     NavigationService,
     ServiceWorkerService,
     IndexedDbService,
+    CryptoService,
   ],
 })
 export class CoreModule { }

@@ -13,6 +13,9 @@ async function createWindow () {
     backgroundColor: '#ffffff',
     icon: `file://${__dirname}/dist/assets/logo.png`,
     show: false,
+    webPreferences: {
+      nodeIntegrationInWorker: true
+    }
   });
 
   // win.loadURL(url.format({

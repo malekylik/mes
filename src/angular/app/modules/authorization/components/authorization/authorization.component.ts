@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { ValidationService } from '../../services/validation/validation.service';
+import { CryptoService } from 'src/angular/app/modules/core/services/crypto/crypto.service';
 import { AsyncLoginValidator, AsyncPasswordValidator } from '../../validators';
 import { AuthorizationService } from '../../services/authorization/authorization.service';
 import { Account } from '../../intefraces';
@@ -24,6 +25,7 @@ export class AuthorizationComponent implements OnInit {
   constructor(
     public validation: ValidationService,
     private authorization: AuthorizationService,
+    private crypto: CryptoService,
   ) { }
 
   ngOnInit() {
@@ -42,7 +44,7 @@ export class AuthorizationComponent implements OnInit {
 
       Promise.all([
         ((AsyncLoginValidator(this.authorization)(this.loginControl)) as Promise<ValidationErrors>),
-        ((AsyncPasswordValidator(this.authorization)(this.passwordControl)) as Promise<ValidationErrors>),
+        ((AsyncPasswordValidator(this.authorization, this.crypto)(this.passwordControl)) as Promise<ValidationErrors>),
       ]).then(([loginError, passwordError]) => {
 
         if (loginError) {
