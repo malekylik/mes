@@ -9,7 +9,7 @@ import {
 } from './constants';
 import { SeriveWorkerEvents } from './constants/events-type';
 import { MyDB } from './interfaces';
-import { isLogged, isAccountCreated } from './events';
+import { isLogged, isAccountCreated, checkLogin, checkPassword, createAccount, login } from './events';
 
 const worker: any = self;
 let loginDb = null;
@@ -36,10 +36,14 @@ async function createDB() {
 async function createChannel() {
     const channel: BroadcastChannel = new BroadcastChannel(CHANNEL_NAME);
 
-    channel.addEventListener('message', ({ data: { type } }) => {
+    channel.addEventListener('message', ({ data: { type, data } }) => {
         switch (type) {
-            case SeriveWorkerEvents.isLogged: isLogged(channel, loginDb);
-            case SeriveWorkerEvents.isAccountCreated: isAccountCreated(channel, loginDb);
+            case SeriveWorkerEvents.isLogged: isLogged(channel, loginDb); break;
+            case SeriveWorkerEvents.isAccountCreated: isAccountCreated(channel, loginDb); break;
+            case SeriveWorkerEvents.checkLogin: checkLogin(channel, loginDb, data); break;
+            case SeriveWorkerEvents.checkPassword: checkPassword(channel, loginDb, data); break;
+            case SeriveWorkerEvents.createAccount: createAccount(channel, loginDb, data); break;
+            case SeriveWorkerEvents.login: login(channel, loginDb); break;
         }
     });
 

@@ -14,12 +14,14 @@ export interface MyDB extends DBSchema {
     },
     [LOGIN_STORE_NAME]: {
         key: string,
-        value: {
-            login: string,
-            password: string,
-            salt: string,
-            creationTime: number,
-            lastUpdateTime: number,
-        },
+        value: Account,
     }
+}
+
+export interface Account {
+    login: string,
+    password: string,
+    salt: string,
+    creationTime: number,
+    lastUpdateTime: number,
 }

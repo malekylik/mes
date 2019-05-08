@@ -13,21 +13,28 @@ export class ServiceWorkerService {
   }
 
   sendMessage(type: string, data?: any): Promise<any> {
+    const action = new Promise((resolve, reject) => {
+      const onmessage = ({ data }) => {
+        if (data.type === type) {
+          if (data.error) {
+            reject(data.error);
+        } else {
+            resolve(data.data);
+        }
+
+        this.channel.removeEventListener('message', onmessage);
+        }
+      };
+
+      this.channel.addEventListener('message', onmessage);
+      this.channel.postMessage({ type, data });
+    });
+
     if (this.sw) {
-      return new Promise((resolve, reject) => {
-
-        this.channel.onmessage = (event) => {
-            if (event.data.error) {
-                reject(event.data.error);
-            } else {
-                resolve(event.data);
-            }
-        };
-
-        this.channel.postMessage({ type, data });
-      });
+      return action;
     }
 
-    return Promise.resolve(null);
+    return navigator.serviceWorker.ready
+    .then(_ => action);
   }
 }

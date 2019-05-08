@@ -13,5 +13,5 @@ export const LOGIN_DB_SETTINGS: DBSettings = {
 
 export enum isLoggedDBKeys {
     isLogged = 'isLogged',
-    isAccountCreated = 'isAccountCreated',
+    account = 'account',
 }

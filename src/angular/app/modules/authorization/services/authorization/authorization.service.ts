@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { IndexedDbService } from 'src/angular/app/modules/core/services/indexedb/indexed-db.service';
+import { Account } from '../../intefraces';
 
 @Injectable()
 export class AuthorizationService {
@@ -24,7 +25,7 @@ export class AuthorizationService {
   isNewAccountCreated(): Promise<boolean> {
     if (this.isNewAccountCreatedRequest) return this.isNewAccountCreatedRequest;
 
-    const request: Promise<boolean> = new Promise((r) => setTimeout(() => r(true), 1000));
+    const request: Promise<boolean> = this.indexedDb.isAccountCreated();
     this.isNewAccountCreatedRequest = request;
 
     request.then(() => this.isNewAccountCreatedRequest = null);
@@ -33,10 +34,18 @@ export class AuthorizationService {
   }
 
   checkLogin(login: string): Promise<boolean> {
-    return new Promise((r) => setTimeout(() => r(login === 'password'), 1000));
+    return this.indexedDb.checkLogin(login);
   }
 
   checkPassword(password: string): Promise<boolean> {
-    return new Promise((r) => setTimeout(() => r(password === 'login'), 1000));
+    return this.indexedDb.checkPassword(password);
+  }
+
+  createAccount(account: Account): Promise<boolean> {
+    return this.indexedDb.createAccount(account);
+  }
+
+  login(): Promise<boolean> {
+    return this.indexedDb.login();
   }
 }

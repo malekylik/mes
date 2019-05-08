@@ -1,11 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { LoginValidator, PasswordValidator, AsyncLoginValidator, AsyncPasswordValidator } from '../../validators';
 import { ValidationService } from '../../services/validation/validation.service';
 import { AuthorizationService } from '../../services/authorization/authorization.service';
-import { IndexedDbService } from 'src/angular/app/modules/core/services/indexedb/indexed-db.service';
+import { NavigationService } from 'src/angular/app/modules/core/services/navigation/navigation.service';
 import { Account } from '../../intefraces';
 
 @Component({
@@ -25,6 +23,7 @@ export class LoginPageComponent implements OnInit {
     public validation: ValidationService,
     private router: Router,
     private authorization: AuthorizationService,
+    private navigation: NavigationService,
     ) { }
 
   ngOnInit() {
@@ -36,24 +35,25 @@ export class LoginPageComponent implements OnInit {
   }
 
   onCreatAccount(account: Account): void {
-    console.log('create', account);
-
-    this.isNewAccountCreated = true;
-    this.isLogged = false;
+    this.loading = true;
+    this.authorization.createAccount(account).then((isCreated) => {
+      this.isNewAccountCreated = isCreated;
+      this.isLogged = false;
+      this.loading = false;
+    });
   }
 
-  onLogin(account: Account): void {
+  onLogin(): void {
     if (this.isNewAccountCreated) {
       this.requestLoading = true;
-      setTimeout(() => { 
-        this.requestLoading = false;
-        this.router.navigateByUrl('list');
-        console.log('login db', account);
-      }, 1000);
 
+      this.authorization.login().then(() =>
+        this.router.navigateByUrl('list').then(() => { 
+          this.requestLoading = false;
+          this.navigation.activateLink(1);
+        }));
     } else {
       this.isLogged = true;
-      console.log('login', account);
     }
   }
 

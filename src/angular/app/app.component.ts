@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, GuardsCheckEnd, NavigationCancel, ResolveStart, ResolveEnd, NavigationEnd } from '@angular/router';
+import { Router, NavigationCancel, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 

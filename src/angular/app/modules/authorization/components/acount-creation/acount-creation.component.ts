@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ValidationService } from '../../services/validation/validation.service';
-import { LoginValidator, PasswordValidator } from '../../validators';
+import { Account } from '../../intefraces';
 
 @Component({
   selector: 'app-acount-creation',
@@ -17,19 +17,13 @@ export class AcountCreationComponent implements OnInit {
   validationLoading: boolean = false;
 
   @Input() loading: boolean = false;
-  @Output() onCreatAccount = new EventEmitter<any>();
+  @Output() onCreatAccount = new EventEmitter<Account>();
 
   constructor(public validation: ValidationService) { }
 
   ngOnInit() {
-    this.loginControl = new FormControl('', {
-      validators: [Validators.required, LoginValidator()],
-      updateOn: 'submit'
-    });
-    this.passwordControl = new FormControl('', {
-      validators: [Validators.required, PasswordValidator()],
-      updateOn: 'submit'
-    });
+    this.loginControl = new FormControl('', [Validators.required]);
+    this.passwordControl = new FormControl('', [Validators.required]);
 
     this.form = new FormGroup({
       login: this.loginControl,
@@ -39,9 +33,9 @@ export class AcountCreationComponent implements OnInit {
 
   create(): void {
     if (this.form.valid) {
-      console.log('valid pass');
       const login: string = this.loginControl.value;
       const password: string = this.passwordControl.value;
+
       this.onCreatAccount.emit({ login, password });
     }
   }
