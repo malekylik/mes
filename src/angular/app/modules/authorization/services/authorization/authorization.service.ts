@@ -6,6 +6,7 @@ import { IndexedDbService } from 'src/angular/app/modules/core/services/indexedb
 export class AuthorizationService {
 
   private authenticationRequest: Promise<boolean> = null;
+  private isNewAccountCreatedRequest: Promise<boolean> = null;
 
   constructor(private indexedDb: IndexedDbService) { }
 
@@ -21,6 +22,21 @@ export class AuthorizationService {
   }
 
   isNewAccountCreated(): Promise<boolean> {
-    return new Promise((r) => setTimeout(() => r(false), 1000));
+    if (this.isNewAccountCreatedRequest) return this.isNewAccountCreatedRequest;
+
+    const request: Promise<boolean> = new Promise((r) => setTimeout(() => r(true), 1000));
+    this.isNewAccountCreatedRequest = request;
+
+    request.then(() => this.isNewAccountCreatedRequest = null);
+
+    return request;
+  }
+
+  checkLogin(login: string): Promise<boolean> {
+    return new Promise((r) => setTimeout(() => r(login === 'password'), 1000));
+  }
+
+  checkPassword(password: string): Promise<boolean> {
+    return new Promise((r) => setTimeout(() => r(password === 'login'), 1000));
   }
 }

@@ -48,7 +48,7 @@ export class DiagnosticPageComponent implements OnInit {
     if (this.diagnosticFormGroup.valid) {
       this.loading = true;
       this.diagnosticInfo = null;
-      
+
       const ruleName: string = '';
       const formValue: any = this.diagnosticFormGroup.value;
       const rule: Rule = new BaseRule(

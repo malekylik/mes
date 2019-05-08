@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ValidationService } from '../../services/validation/validation.service';
@@ -14,7 +14,9 @@ export class AcountCreationComponent implements OnInit {
   form: FormGroup;
   loginControl: FormControl;
   passwordControl: FormControl;
+  validationLoading: boolean = false;
 
+  @Input() loading: boolean = false;
   @Output() onCreatAccount = new EventEmitter<any>();
 
   constructor(public validation: ValidationService) { }

@@ -2,13 +2,20 @@ import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/fo
 
 import { ValidationErrorsKeys } from '../constants/error';
 import { PASSWORD } from '../constants/login';
-import { IndexedDbService } from 'src/angular/app/modules/core/services/indexedb/indexed-db.service';
+import { AuthorizationService } from '../services/authorization/authorization.service';
 
-export function AsyncPasswordValidator(indexedDb: IndexedDbService): AsyncValidatorFn {
-    return (control: AbstractControl):  Promise<ValidationErrors> => {
-        const password: string = control.value;
-        const isValid: boolean = password === PASSWORD;
+export function AsyncPasswordValidator(authorization: AuthorizationService): AsyncValidatorFn {
+  return async (control: AbstractControl): Promise<ValidationErrors> => {
+    const isNewAccountCreated = await authorization.isNewAccountCreated();
+    const password: string = control.value;
+    let isValid: boolean = false;
 
-        return Promise.resolve(isValid ? null : { [ValidationErrorsKeys.password]: { password } });
-    };
-}
+    if (isNewAccountCreated) {
+      isValid = await authorization.checkPassword(password);
+    } else {
+      isValid = password === PASSWORD;
+    }
+
+    return isValid ? null : { [ValidationErrorsKeys.password]: { password } };
+  };
+} 

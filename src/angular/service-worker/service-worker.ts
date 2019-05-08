@@ -2,18 +2,20 @@ import { openDB } from 'idb/with-async-ittr.js';
 
 import { 
     CHANNEL_NAME,
+    LOGIN_STORE_NAME,
     IS_LOGGED_STORE_NAME,
     LOGIN_DB_SETTINGS,
     isLoggedDBKeys,
 } from './constants';
 import { SeriveWorkerEvents } from './constants/events-type';
 import { MyDB } from './interfaces';
-import { isLogged } from './events';
+import { isLogged, isAccountCreated } from './events';
 
 const worker: any = self;
 let loginDb = null;
 
 function upgradeDB(upgradeDB): void {
+    const accountStore = upgradeDB.createObjectStore(LOGIN_STORE_NAME);
     const store = upgradeDB.createObjectStore(IS_LOGGED_STORE_NAME);
 
     store.put(false, isLoggedDBKeys.isLogged);
@@ -37,6 +39,7 @@ async function createChannel() {
     channel.addEventListener('message', ({ data: { type } }) => {
         switch (type) {
             case SeriveWorkerEvents.isLogged: isLogged(channel, loginDb);
+            case SeriveWorkerEvents.isAccountCreated: isAccountCreated(channel, loginDb);
         }
     });
 

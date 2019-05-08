@@ -11,4 +11,8 @@ export class IndexedDbService {
   isLogged(): Promise<boolean> {
     return this.serviceWorker.sendMessage(SeriveWorkerEvents.isLogged);
   }
+
+  isAccountCreated(): Promise<boolean> {
+    return this.serviceWorker.sendMessage(SeriveWorkerEvents.isAccountCreated);
+  }
 }

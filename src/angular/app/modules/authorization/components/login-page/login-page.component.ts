@@ -6,6 +6,7 @@ import { LoginValidator, PasswordValidator, AsyncLoginValidator, AsyncPasswordVa
 import { ValidationService } from '../../services/validation/validation.service';
 import { AuthorizationService } from '../../services/authorization/authorization.service';
 import { IndexedDbService } from 'src/angular/app/modules/core/services/indexedb/indexed-db.service';
+import { Account } from '../../intefraces';
 
 @Component({
   selector: 'app-login-page',
@@ -17,84 +18,43 @@ export class LoginPageComponent implements OnInit {
 
   isNewAccountCreated: boolean = false;
   isLogged: boolean = false;
+  requestLoading: boolean = false;
   loading: boolean = true;
 
   constructor(
     public validation: ValidationService,
     private router: Router,
-    private cd: ChangeDetectorRef,
-    private indexedDb: IndexedDbService,
     private authorization: AuthorizationService,
     ) { }
 
   ngOnInit() {
     this.authorization.isNewAccountCreated()
     .then((isCreated) => {
-      // this.isNewAccountCreated = isCreated;
-      this.isNewAccountCreated = true;
+      this.isNewAccountCreated = isCreated;
       this.loading = false;
-      // if (isCreated) {
-      //   this.router.navigateByUrl('list');
-      // } else {
-      //   // this.setAuthPage();
-      //   this.createAuthForm();
-      //   this.pageName = 'Аутентификация';
-      //   this.onSubmit = this.login;
-      //   this.loading = false;
-      // }
     });
   }
 
-  onCreatAccount(account): void {
+  onCreatAccount(account: Account): void {
     console.log('create', account);
 
     this.isNewAccountCreated = true;
     this.isLogged = false;
   }
 
-  onLogin(account): void {
+  onLogin(account: Account): void {
     if (this.isNewAccountCreated) {
-      console.log('login db', account);
+      this.requestLoading = true;
+      setTimeout(() => { 
+        this.requestLoading = false;
+        this.router.navigateByUrl('list');
+        console.log('login db', account);
+      }, 1000);
 
     } else {
       this.isLogged = true;
       console.log('login', account);
     }
   }
-
-  // login(): void {
-  //   console.log('login fire');
-  //   console.log('valid', this.form.valid);
-  //   if (this.form.valid) {
-  //     console.log('valid pass');
-  //     const login: string = this.loginControl.value;
-  //     const password: string = this.passwordControl.value;
-  //     this.indexedDb.isLogged().then(isLogged => { 
-  //       console.log('login page isLogged', isLogged);
-  //       this.setNewAccountPage();
-  //       this.cd.markForCheck();
-  //     });
-  //   }
-  // }
-
-  // createAccount(): void {
-  //   if (this.form.valid) {
-  //     console.log('create account');
-  //   }
-  // }
-
-  // private setAuthPage() {
-  //   this.changeForm('Аутентификация', () => this.createAuthForm(), this.login);
-  // }
-
-  // private setNewAccountPage() {
-  //   this.changeForm('Создание нового аккаунта', () => this.createNewAccoutForm(), this.createAccount);
-  // }
-
-  // private changeForm(pageName: PageName, createForm: () => void, onSubmit: () => void) {
-  //   createForm();
-  //   this.pageName = pageName;
-  //   this.onSubmit = onSubmit;
-  // }
 
 }

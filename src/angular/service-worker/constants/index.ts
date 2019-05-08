@@ -7,10 +7,11 @@ export const IS_LOGGED_STORE_NAME: 'logged-store' = 'logged-store';
 
 export const LOGIN_DB_SETTINGS: DBSettings = {
     name: 'login',
-    version: 3,
+    version: 4,
 }
 
 
 export enum isLoggedDBKeys {
     isLogged = 'isLogged',
+    isAccountCreated = 'isAccountCreated',
 }

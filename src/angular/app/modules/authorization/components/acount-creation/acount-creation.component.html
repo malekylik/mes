@@ -12,6 +12,8 @@
       <input matInput type="password" placeholder="Введите пароль" name="password" formControlName="password" required>
       <mat-error>{{validation.validate(passwordControl.errors)}}</mat-error>
     </mat-form-field>
-    <button mat-button type="submit" class="acount-creation-button">Войти</button>
+    <button [disabled]="loading || validationLoading" class="acount-creation-button" mat-raised-button color="primary" type="submit">
+        <span *appLoading="!loading && !validationLoading; color: 'accent'">Создать аккаунт</span>
+      </button>
   </form>
 </div>

@@ -1,6 +1,6 @@
 import { DBSchema  } from 'idb/with-async-ittr.js';
 
-import { IS_LOGGED_STORE_NAME } from '../constants';
+import { LOGIN_STORE_NAME, IS_LOGGED_STORE_NAME } from '../constants';
 
 export interface DBSettings {
     name: string;
@@ -12,4 +12,14 @@ export interface MyDB extends DBSchema {
         key: string,
         value: boolean,
     },
+    [LOGIN_STORE_NAME]: {
+        key: string,
+        value: {
+            login: string,
+            password: string,
+            salt: string,
+            creationTime: number,
+            lastUpdateTime: number,
+        },
+    }
 }
