@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationCancel, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { TabLink } from './interfaces/tab-link';
 import { NavigationService } from './modules/core/services/navigation/navigation.service';
@@ -15,14 +17,30 @@ export class AppComponent implements OnInit {
   activeLinkIndex: number = this.navigation.getActiveLinkValue();
 
   private $activeLinkIndex: Observable<number> = this.navigation.getActiveLink();
+  private nextActiveLinkIndex: number = null;
 
-  constructor(private navigation: NavigationService) {}
+  constructor(private navigation: NavigationService, private router: Router) {}
 
   ngOnInit() {
     this.$activeLinkIndex.subscribe(linkNumber => this.activeLinkIndex = linkNumber);
+
+    this.router.events.pipe(
+      filter(() => this.nextActiveLinkIndex !== null),
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => { 
+      this.navigation.activateLink(this.nextActiveLinkIndex);
+
+      this.nextActiveLinkIndex = null
+    });
+  
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationCancel),
+    ).subscribe(() => this.nextActiveLinkIndex = null);
   }
 
   changeActiveTab(index: number): void {
-    this.navigation.activateLink(index);
+    const isDifferentIndex: boolean = this.activeLinkIndex !== index;
+
+    this.nextActiveLinkIndex = isDifferentIndex ? index : null;
   }
 }

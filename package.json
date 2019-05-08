@@ -9,7 +9,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "tsc -p ./src/electron/tsconfig.electron.json && electron --disable-gpu ./dist/electron/main.js",
-    "electron-build": "ng build --prod && electron ./dist/angular"
+    "electron-build": "ng build --prod && electron ./dist/angular",
+    "build-worker": "webpack --mode production --config webpack.config.js",
+    "worker": "webpack --watch --mode development --config webpack.config.js"
   },
   "private": true,
   "dependencies": {
@@ -20,9 +22,15 @@
     "@angular/http": "^7.0.0",
     "@angular/platform-browser": "^7.0.0",
     "@angular/platform-browser-dynamic": "^7.0.0",
+    "@angular/pwa": "^0.13.8",
     "@angular/router": "^7.0.0",
+    "@angular/service-worker": "^7.0.0",
+    "awesome-typescript-loader": "^5.2.1",
     "core-js": "^2.5.4",
+    "idb": "^4.0.3",
     "rxjs": "~6.3.3",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.2",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
@@ -53,6 +61,6 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.1.3"
+    "typescript": "^3.2.4"
   }
 }

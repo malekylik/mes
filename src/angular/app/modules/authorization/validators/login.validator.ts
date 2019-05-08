@@ -8,6 +8,6 @@ export function LoginValidator(): ValidatorFn {
         const login: string = control.value;
         const isValid: boolean = login === LOGIN;
 
-        return isValid ? null : { [ValidationErrorsKeys.login]: { login } } ;
+        return isValid ? null : { [ValidationErrorsKeys.login]: { login } };
     };
 }

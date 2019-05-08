@@ -15,15 +15,7 @@ export class NavigationService {
   private activeLinkIndex: number = 0;
   private $activeLinkIndex: Subject<number> = new Subject();
 
-  private stackStart: number;
-  private stackEnd: number;
-  private navigationStack: NavigationStackItem[];
-
   constructor() { 
-    this.stackStart = 0;
-    this.stackEnd = 0;
-
-    this.navigationStack = new Array(10);
     this.changeActiveLink(0);
   }
 
@@ -39,46 +31,8 @@ export class NavigationService {
     return this.activeLinkIndex;
   }
 
-  setActiveLinkValue(index: number): number {
-    return this.changeActiveLink(index);
-  }
-
   activateLink(index: number): number {
-    this.pushLink(this.activeLinkIndex, this.routeLinks[this.activeLinkIndex]);
-
     return this.changeActiveLink(index);
-  }
-
-  pushLink(index: number, link: TabLink): void {
-    let { stackStart, stackEnd } = this;
-
-    this.navigationStack[stackEnd] = {
-      activeTab: index,
-      link: link,
-    };
-
-    stackEnd = (stackEnd + 1) % 10;
-
-    if ((stackEnd + 1) % 10 === stackStart) stackStart = (stackStart + 1) % 10;
-
-    this.stackStart = stackStart;
-    this.stackEnd = stackEnd;
-  }
-
-  popLink(): TabLink {
-    const { stackStart } = this;
-    let { stackEnd } = this;
-
-    if (stackStart === stackEnd) return null;
-
-    stackEnd = ((stackEnd - 1) + 10) % 10;
-
-    const stackItem: NavigationStackItem = this.navigationStack[stackEnd];
-
-    this.stackEnd = stackEnd;
-    this.changeActiveLink(stackItem.activeTab);
-
-    return stackItem.link;
   }
 
   private changeActiveLink(index: number): number {

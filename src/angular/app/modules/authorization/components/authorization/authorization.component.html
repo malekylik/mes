@@ -1,0 +1,19 @@
+<div class="authorization-page">
+  <header class="authorization-header">
+    <h2 class="authorization-heading">Аутентификация</h2>
+  </header>
+  <form class="authorization-form" [formGroup]="form" (ngSubmit)="login()">
+    <mat-form-field>
+      <input matInput type="text" placeholder="Введите логин" name="login" formControlName="login"
+        required>
+      <mat-error>{{validation.validate(loginControl.errors)}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" placeholder="Введите пароль" name="password" formControlName="password" required>
+      <mat-error>{{validation.validate(passwordControl.errors)}}</mat-error>
+    </mat-form-field>
+    <button [disabled]="loading || validationLoading" class="authorization-button" mat-raised-button color="primary" type="submit">
+      <span *appLoading="!loading && !validationLoading; color: 'accent'">Войти</span>
+    </button>
+  </form>
+</div>

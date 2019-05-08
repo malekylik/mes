@@ -1,0 +1,32 @@
+@import "src/angular/app/styles/mixins/layout.scss";
+
+.acount-creation-page {
+    width: 600px;
+    border-radius: 5px;
+    background: #fff;
+
+    @include page-width();
+}
+
+.acount-creation-header {
+    display: flex;
+    align-items: flex-end;
+    height: 50px;
+    padding: 10px;
+    border-bottom: 2px solid #999;
+}
+
+.acount-creation-heading {
+    display: flex;
+    align-items: flex-end;
+}
+
+.acount-creation-button {
+    align-self: end;
+}
+
+.acount-creation-form {
+    display: flex;
+    flex-flow: column;
+    padding: 20px 50px;
+}

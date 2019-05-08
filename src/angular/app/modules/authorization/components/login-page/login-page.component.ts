@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import { LoginValidator, PasswordValidator } from '../../validators';
 import { ValidationService } from '../../services/validation/validation.service';
+import { AuthorizationService } from '../../services/authorization/authorization.service';
+import { NavigationService } from 'src/angular/app/modules/core/services/navigation/navigation.service';
+import { Account } from '../../intefraces';
 
 @Component({
   selector: 'app-login-page',
@@ -12,26 +14,46 @@ import { ValidationService } from '../../services/validation/validation.service'
 })
 export class LoginPageComponent implements OnInit {
 
-  form: FormGroup;
-  loginControl: FormControl;
-  passwordControl: FormControl;
+  isNewAccountCreated: boolean = false;
+  isLogged: boolean = false;
+  requestLoading: boolean = false;
+  loading: boolean = true;
 
-  constructor(public validation: ValidationService) { }
+  constructor(
+    public validation: ValidationService,
+    private router: Router,
+    private authorization: AuthorizationService,
+    private navigation: NavigationService,
+    ) { }
 
   ngOnInit() {
-    this.loginControl = new FormControl('', [Validators.required, LoginValidator()]);
-    this.passwordControl = new FormControl('', [Validators.required, PasswordValidator()]);
-
-    this.form = new FormGroup({
-      login: this.loginControl,
-      password: this.passwordControl,
+    this.authorization.isNewAccountCreated()
+    .then((isCreated) => {
+      this.isNewAccountCreated = isCreated;
+      this.loading = false;
     });
   }
 
-  login(): void {
-    if (this.form.valid) {
-      const login: string = this.loginControl.value;
-      const password: string = this.passwordControl.value;
+  onCreatAccount(account: Account): void {
+    this.loading = true;
+    this.authorization.createAccount(account).then((isCreated) => {
+      this.isNewAccountCreated = isCreated;
+      this.isLogged = false;
+      this.loading = false;
+    });
+  }
+
+  onLogin(): void {
+    if (this.isNewAccountCreated) {
+      this.requestLoading = true;
+
+      this.authorization.login().then(() =>
+        this.router.navigateByUrl('list').then(() => { 
+          this.requestLoading = false;
+          this.navigation.activateLink(1);
+        }));
+    } else {
+      this.isLogged = true;
     }
   }
 

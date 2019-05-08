@@ -20,7 +20,9 @@
             "tsConfig": "src/angular/tsconfig.app.json",
             "assets": [
               "src/angular/favicon.ico",
-              "src/angular/assets"
+              "src/angular/assets",
+              "src/angular/manifest.webmanifest",
+              "src/angular/service-worker.js"
             ],
             "styles": [
               "./node_modules/material-design-icons/iconfont/material-icons.css",
@@ -44,7 +46,8 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true
+              "buildOptimizer": true,
+              "serviceWorker": true
             }
           }
         },
@@ -78,7 +81,9 @@
             "scripts": [],
             "assets": [
               "src/angular/favicon.ico",
-              "src/angular/assets"
+              "src/angular/assets",
+              "src/angular/manifest.webmanifest",
+              "src/angular/service-worker.js"
             ]
           }
         },

@@ -1,20 +1,6 @@
 <div class='login-page-wrapper'>
-  <div class="login-page mat-elevation-z4">
-    <header class="login-header">
-      <h2 class="login-heading">Аутентификация</h2>
-    </header>
-    <form class="login-form" [formGroup]="form" (ngSubmit)="login()">
-      <mat-form-field>
-        <input matInput type="text" placeholder="Введите логин" name="login" formControlName="login"
-          required>
-        <mat-error>{{validation.validate(loginControl.errors)}}</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="password" placeholder="Введите пароль" name="password" formControlName="password" required>
-        <mat-error>{{validation.validate(passwordControl.errors)}}</mat-error>
-      </mat-form-field>
-      <button mat-button type="submit" class="login-button">Войти</button>
-    </form>
+  <div *appLoading="!loading; diameter: 100" class="mat-elevation-z4">
+    <app-authorization *ngIf="!isLogged" (onLogin)="onLogin($event)" [loading]="requestLoading"></app-authorization>
+    <app-acount-creation *ngIf="isLogged && !isNewAccountCreated" (onCreatAccount)="onCreatAccount($event)"></app-acount-creation>
   </div>
 </div>
-

@@ -7,14 +7,14 @@ import { AuthorizationService } from 'src/angular/app/modules/authorization/serv
 export class AuthGuard implements CanActivate {
     constructor(
         private router: Router,
-        private authorizationService: AuthorizationService,
+        private authorization: AuthorizationService,
     ) { }
 
-    canActivate(): boolean {
-        if (this.authorizationService.isAuthenticated()) {
-            this.router.navigateByUrl('');
-        }
+    async canActivate(): Promise<boolean> {
+        const isAuthenticated: boolean = await this.authorization.isAuthenticated();
 
-        return this.authorizationService.isAuthenticated();
+        if (isAuthenticated) this.router.navigateByUrl('');
+
+        return isAuthenticated;
     }
 }

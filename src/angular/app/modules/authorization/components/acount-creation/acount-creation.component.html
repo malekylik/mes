@@ -1,0 +1,19 @@
+<div class="acount-creation-page">
+  <header class="acount-creation-header">
+    <h2 class="acount-creation-heading">Создание нового аккаунта</h2>
+  </header>
+  <form class="acount-creation-form" [formGroup]="form" (ngSubmit)="create()">
+    <mat-form-field>
+      <input matInput type="text" placeholder="Введите логин" name="login" formControlName="login"
+        required>
+      <mat-error>{{validation.validate(loginControl.errors)}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" placeholder="Введите пароль" name="password" formControlName="password" required>
+      <mat-error>{{validation.validate(passwordControl.errors)}}</mat-error>
+    </mat-form-field>
+    <button [disabled]="loading || validationLoading" class="acount-creation-button" mat-raised-button color="primary" type="submit">
+        <span *appLoading="!loading && !validationLoading; color: 'accent'">Создать аккаунт</span>
+      </button>
+  </form>
+</div>
