@@ -19,4 +19,8 @@ export class AuthorizationService {
 
     return request;
   }
+
+  isNewAccountCreated(): Promise<boolean> {
+    return new Promise((r) => setTimeout(() => r(false), 1000));
+  }
 }
