@@ -81,10 +81,18 @@ export class InferenceService {
   }
 
   private async asyncInference(rule: Rule): Promise<map<DiagnosisInfo[]>> {
+    const { infereceRules } = this;
     const result: map<DiagnosisInfo[]> = {};
+    const inferencePromises: Array<Promise<DiagnosisInfo[]>> = new Array(infereceRules.length);
 
-    for (let inferenceRule of this.infereceRules) {
-      result[inferenceRule.toString()] = await inferenceRule.inference(this.rulesApi, rule);
+    for (let i = 0; i < infereceRules.length; i++) {
+      inferencePromises[i] = infereceRules[i].inference(this.rulesApi, rule);
+    }
+
+    const infos = await Promise.all(inferencePromises);
+
+    for (let i = 0; i < infereceRules.length; i++) {
+      result[infereceRules[i].toString()] = infos[i];
     }
 
     return result;
