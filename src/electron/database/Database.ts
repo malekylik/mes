@@ -11,7 +11,7 @@ export class Database {
     static async getDB(): Promise<Db> {
         if (!this.isConnected()) {
             Database.mongoClient = await MongoClient.connect(
-                `mongodb://${SERVER_URL}`, 
+                `mongodb://${SERVER_URL}`,
                 {
                     useNewUrlParser: true,
                     autoReconnect: false,

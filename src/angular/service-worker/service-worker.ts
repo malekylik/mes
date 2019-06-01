@@ -9,10 +9,28 @@ import {
 } from './constants';
 import { SeriveWorkerEvents } from './constants/events-type';
 import { MyDB } from './interfaces';
-import { isLogged, isAccountCreated, checkLogin, checkPassword, createAccount, login } from './events';
+import {
+    isLogged,
+    isAccountCreated,
+    checkLogin,
+    checkPassword,
+    createAccount,
+    login,
+} from './events';
 
-const worker: any = self;
 let loginDb = null;
+
+async function init() {
+    const channel: BroadcastChannel = await createChannel();
+
+    try {
+        await createDB();
+        channel.postMessage({ type: SeriveWorkerEvents.init, isInit: true });
+        console.log('worker work');
+    } catch(_) {
+        channel.postMessage({ type: SeriveWorkerEvents.init, isInit: false });
+    }
+}
 
 function upgradeDB(upgradeDB): void {
     const accountStore = upgradeDB.createObjectStore(LOGIN_STORE_NAME);
@@ -33,7 +51,7 @@ async function createDB() {
     return null;
 }
 
-async function createChannel() {
+async function createChannel(): Promise<BroadcastChannel> {
     const channel: BroadcastChannel = new BroadcastChannel(CHANNEL_NAME);
 
     channel.addEventListener('message', ({ data: { type, data } }) => {
@@ -47,18 +65,7 @@ async function createChannel() {
         }
     });
 
-    return null;
+    return channel;
 }
 
-self.addEventListener('install', function(event: any) {
-    event.waitUntil(worker.skipWaiting());
-});
-
-self.addEventListener('activate', function(event: any) {
-    event.waitUntil(Promise.all([
-        createDB(), 
-        createChannel(),
-    ]),
-    worker.clients.claim(),
-    );
-});
+init();
