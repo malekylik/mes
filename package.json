@@ -24,7 +24,6 @@
     "@angular/platform-browser-dynamic": "^7.0.0",
     "@angular/pwa": "^0.13.8",
     "@angular/router": "^7.0.0",
-    "@angular/service-worker": "^7.0.0",
     "awesome-typescript-loader": "^5.2.1",
     "core-js": "^2.5.4",
     "idb": "^4.0.3",

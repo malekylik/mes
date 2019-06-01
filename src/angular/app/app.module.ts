@@ -2,8 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgxElectronModule } from 'ngx-electron';
 import { RouterModule } from '@angular/router';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { ROUTES } from './app.routes';
@@ -30,8 +28,6 @@ import { NoAuthGuard } from './guards/no-auth.guard';
     InferenceModule,
     AuthorizationModule,
     RouterModule.forRoot(ROUTES),
-    // ServiceWorkerModule.register('service-worker.js', { enabled: environment.production }),
-    ServiceWorkerModule.register('service-worker.js'),
   ],
   providers: [
     AuthGuard,
