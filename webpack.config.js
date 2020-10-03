@@ -12,14 +12,6 @@ module.exports = {
     path: path.resolve(__dirname, path.join('src', 'angular')),
   },
   devtool: 'inline-source-map',
-  module: {
-    rules: [
-      {
-        test: /\.ts?$/,
-        loader: 'awesome-typescript-loader'
-      }
-    ]
-  },
   externals: {
     crypto: 'crypto'
   }

@@ -4,10 +4,16 @@ import { Observable, from } from 'rxjs';
 
 import { Rule } from 'src/electron/interfaces/Rule';
 
+interface RuleApi {
+  updateRule(id: string, rule: Rule): Promise<void>;
+  insertRule(rule: Rule): Promise<void>;
+  getRule(id: string): Promise<Rule>;
+}
+
 @Injectable()
 export class RuleService {
 
-  private ruleApi;
+  private ruleApi: RuleApi;
 
   constructor(
     private electronService: ElectronService
