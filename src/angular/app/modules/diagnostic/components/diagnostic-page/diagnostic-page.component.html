@@ -18,7 +18,13 @@
         <label for="file" class="controls__file-label"></label>
       </button>
 
-      <input id="file" class="controls__file-input" type="file" (change)="onLoadData($event.target.files)" />
+      <input
+        id="file"
+        class="controls__file-input"
+        type="file"
+        (change)="onLoadData($event.target.files)"
+        accept=".csv"
+      />
     </div>
   </form>
 </div>
