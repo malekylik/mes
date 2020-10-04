@@ -14,7 +14,9 @@ async function createWindow () {
     icon: `file://${__dirname}/dist/assets/logo.png`,
     show: false,
     webPreferences: {
-      nodeIntegrationInWorker: true
+      nodeIntegration: true,
+      nodeIntegrationInWorker: true,
+      enableRemoteModule: true,
     }
   });
 

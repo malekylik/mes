@@ -5,7 +5,7 @@ import { Rule } from '../interfaces/Rule';
 import { COLLECTIONS } from '../consts/database';
 
 export class RuleApi {
-    static async insertRule(rule: Rule): Promise<InsertOneWriteOpResult> {
+    static async insertRule(rule: Rule): Promise<InsertOneWriteOpResult<Required<Rule>>> {
         return (await Database.getDB())
                 .collection(COLLECTIONS.Rules)
                 .insertOne(rule);

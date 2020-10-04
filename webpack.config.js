@@ -11,15 +11,18 @@ module.exports = {
     filename: 'service-worker.js',
     path: path.resolve(__dirname, path.join('src', 'angular')),
   },
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {
-        test: /\.ts?$/,
-        loader: 'awesome-typescript-loader'
+        test: /\.ts$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+        }
       }
     ]
   },
+  devtool: 'inline-source-map',
   externals: {
     crypto: 'crypto'
   }

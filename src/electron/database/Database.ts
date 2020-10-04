@@ -10,14 +10,18 @@ export class Database {
 
     static async getDB(): Promise<Db> {
         if (!this.isConnected()) {
-            Database.mongoClient = await MongoClient.connect(
-                `mongodb://${SERVER_URL}`,
-                {
-                    useNewUrlParser: true,
-                    autoReconnect: false,
-                });
-            Database.db = Database.mongoClient.db(DB_NAME);
-            Database.mongoClient.once('close', () => Database.close());
+            try {
+                Database.mongoClient = await MongoClient.connect(
+                    `mongodb://${SERVER_URL}`,
+                    {
+                        useNewUrlParser: true,
+                        autoReconnect: false,
+                    });
+                Database.db = Database.mongoClient.db(DB_NAME);
+                Database.mongoClient.once('close', () => Database.close());
+            } catch (e) {
+                console.log('error to connect to db', e);
+            }
         }
 
         return Database.db;

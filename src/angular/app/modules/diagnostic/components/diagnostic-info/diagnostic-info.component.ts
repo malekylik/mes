@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 
 import { map } from 'src/angular/app/utils/interfaces/map';
 import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
