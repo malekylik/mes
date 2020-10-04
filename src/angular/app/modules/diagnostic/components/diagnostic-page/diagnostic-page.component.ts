@@ -34,6 +34,8 @@ export class DiagnosticPageComponent implements OnInit {
   diagnosticInfo: map<DiagnosisInfo[]> = null;
   general: GeneralDiagnosisInfo[] = null;
 
+  fileToUpload: File = null;
+
   constructor(
     private fb: FormBuilder,
     private inferenceEngine: InferenceService,
@@ -76,6 +78,18 @@ export class DiagnosticPageComponent implements OnInit {
           this.infoMessageService.showMessage(SOMETHING_WENT_WRONG);
         }
       );
+    }
+  }
+
+  onLoadData(files: FileList) {
+    if (files.length > 0) {
+      const file = files.item(0);
+
+      console.log('load data', file);
+
+      const reader = new FileReader();
+      reader.onload = (e) => console.log('res', e.target.result);
+      reader.readAsText(file);
     }
   }
 
