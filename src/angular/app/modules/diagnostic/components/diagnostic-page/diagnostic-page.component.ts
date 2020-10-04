@@ -13,6 +13,7 @@ import { map } from 'src/angular/app/utils/interfaces/map';
 import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
 import { GeneralDiagnosisInfo } from 'src/electron/interfaces/GeneralDiagnosisInfo';
 import { SOMETHING_WENT_WRONG } from 'src/angular/app/constants';
+import { parseCSVFile } from 'src/angular/app/utils/csv/csv';
 
 @Component({
   selector: 'app-diagnostic-page',
@@ -33,8 +34,6 @@ export class DiagnosticPageComponent implements OnInit {
   loading: boolean = false;
   diagnosticInfo: map<DiagnosisInfo[]> = null;
   general: GeneralDiagnosisInfo[] = null;
-
-  fileToUpload: File = null;
 
   constructor(
     private fb: FormBuilder,
@@ -85,10 +84,43 @@ export class DiagnosticPageComponent implements OnInit {
     if (files.length > 0) {
       const file = files.item(0);
 
-      console.log('load data', file);
-
       const reader = new FileReader();
-      reader.onload = (e) => console.log('res', e.target.result);
+      reader.onload = (e) => { 
+        const fileStr = e.target.result;
+        const parsedCSV = parseCSVFile(fileStr);
+
+        const ageIndx = parsedCSV.rows?.[0]?.indexOf(DiagnosticFormFields.age);
+        const age = parsedCSV.rows?.[1]?.[ageIndx] ?? null;
+        const tIndx = parsedCSV.rows?.[0]?.indexOf(DiagnosticFormFields.T);
+        const T = parsedCSV.rows?.[1]?.[tIndx] ?? null;
+        const sexIndx = parsedCSV.rows?.[0]?.indexOf(DiagnosticFormFields.sex);
+        const sex = parsedCSV.rows?.[1]?.[sexIndx] ?? null;
+        const timeIndx = parsedCSV.rows?.[0]?.indexOf(DiagnosticFormFields.time);
+        const time = parsedCSV.rows?.[1]?.[timeIndx] ?? null;
+        const vomitingIndx = parsedCSV.rows?.[0]?.indexOf(DiagnosticFormFields.vomiting);
+        const vomiting = parsedCSV.rows?.[1]?.[vomitingIndx] ?? null;
+        const leukocytosisIndx = parsedCSV.rows?.[0]?.findIndex(s => s.includes(OAKFormFields.leukocytosis));
+        const leukocytosis = parsedCSV.rows?.[1]?.[leukocytosisIndx] ?? null;
+        const neutrophiliaIndx = parsedCSV.rows?.[0]?.findIndex(s => s.includes(OAKFormFields.neutrophilia));
+        const neutrophilia = parsedCSV.rows?.[1]?.[neutrophiliaIndx] ?? null;
+        const lymphocytosisIndx = parsedCSV.rows?.[0]?.findIndex(s => s.includes(OAKFormFields.lymphocytosis));
+        const lymphocytosis = parsedCSV.rows?.[1]?.[lymphocytosisIndx] ?? null;
+
+        this.diagnosticFormGroup.setValue({
+          [RuleFormFields.diagnostic]: {
+            [DiagnosticFormFields.age]: age, 
+            [DiagnosticFormFields.T]: T,
+            [DiagnosticFormFields.sex]: sex,
+            [DiagnosticFormFields.time]: time,
+            [DiagnosticFormFields.vomiting]: vomiting,
+            [DiagnosticFormFields.oak]: {
+              [OAKFormFields.leukocytosis]: leukocytosis,
+              [OAKFormFields.neutrophilia]: neutrophilia,
+              [OAKFormFields.lymphocytosis]: lymphocytosis,
+            }
+          }
+        });
+      };
       reader.readAsText(file);
     }
   }
