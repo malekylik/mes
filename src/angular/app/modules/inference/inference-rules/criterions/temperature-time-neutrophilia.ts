@@ -4,9 +4,11 @@ import { BaseInferenceRule } from '../base-inference-rule';
 import { Rule } from 'src/electron/interfaces/Rule';
 import { map } from 'src/angular/app/utils/interfaces/map';
 
+const criterionId = 'Temperature-Time-Neutrophilia';
+
 export class TemperatureTimeNeutrophilia extends BaseInferenceRule {
     toString(): string {
-        return 'Temperature-Time-Neutrophilia';
+        return criterionId;
     }
 
     protected async getMathcher(rulesDb: any, rule: Rule): Promise<map<any>> {
@@ -31,5 +33,9 @@ export class TemperatureTimeNeutrophilia extends BaseInferenceRule {
             t: rule.t,
             'oak.nf': inRange ? nfMatch : NaN,
         };
+    }
+
+    static id(): string {
+        return criterionId;
     }
 }

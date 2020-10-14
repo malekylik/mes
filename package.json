@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "tsc -p ./src/electron/tsconfig.electron.json && electron --disable-gpu ./dist/electron/main.js",
-    "electron-build": "ng build --prod && electron ./dist/angular",
+    "electron-build": "ng build --prod && electron ./dist/electron/main.js",
     "build-worker": "webpack --mode production --config webpack.config.js",
     "worker": "webpack --watch --mode development --config webpack.config.js"
   },

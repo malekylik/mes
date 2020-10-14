@@ -128,5 +128,8 @@
       }
     }
   },
-  "defaultProject": "angular-electoron"
+  "defaultProject": "angular-electoron",
+  "cli": {
+    "analytics": "deccf0c7-7444-4d39-aa69-989a949a9cb3"
+  }
 }

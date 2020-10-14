@@ -7,6 +7,7 @@ import { FormOption } from 'src/angular/app/utils/interfaces/form-option';
 import { RuleFormFields, DiagnosticFormFields, OAKFormFields } from '../../../rule/constants';
 import { AGES, TS, LS, TIMES, SEXES, VOMITINGS } from '../../../rule/constants';
 import { InferenceService } from '../../../inference/services/inference/inference.service';
+import { ExplanationService } from '../../../inference/services/explanation/explanation.service';
 import { InfoMessageService } from 'src/angular/app/modules/core/services/info-message/info-message.service';
 import { BaseRule } from 'src/electron/interfaces/BaseRule';
 import { map } from 'src/angular/app/utils/interfaces/map';
@@ -14,6 +15,13 @@ import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
 import { GeneralDiagnosisInfo } from 'src/electron/interfaces/GeneralDiagnosisInfo';
 import { SOMETHING_WENT_WRONG } from 'src/angular/app/constants';
 import { parseCSVToRule } from 'src/angular/app/utils/csv/utils';
+
+const classes = {
+  'probobition--low': false,
+  'probobition--middle': false,
+  'probobition--high': false,
+  'probobition--very-high': false,
+};
 
 @Component({
   selector: 'app-diagnostic-page',
@@ -34,11 +42,15 @@ export class DiagnosticPageComponent implements OnInit {
   loading: boolean = false;
   diagnosticInfo: map<DiagnosisInfo[]> = null;
   general: GeneralDiagnosisInfo[] = null;
+  probStr: string = '';
+
+  currentClasses = classes;
 
   constructor(
     private fb: FormBuilder,
     private inferenceEngine: InferenceService,
     private infoMessageService: InfoMessageService,
+    private explanationService: ExplanationService,
   ) { }
 
   ngOnInit() {
@@ -49,6 +61,8 @@ export class DiagnosticPageComponent implements OnInit {
     if (this.diagnosticFormGroup.valid) {
       this.loading = true;
       this.diagnosticInfo = null;
+      this.probStr = '';
+      this.currentClasses = classes;
 
       const ruleName: string = '';
       const formValue: any = this.diagnosticFormGroup.value;
@@ -69,6 +83,18 @@ export class DiagnosticPageComponent implements OnInit {
           const d = this.inferenceEngine.getGeneralInfo(result);
           this.diagnosticInfo = result;
           this.general = d;
+
+          const prob = this.explanationService.getProbobition(result);
+          const probStr = this.explanationService.getStringProbobition(prob);
+
+          this.probStr = probStr;
+
+          this.currentClasses = {
+            'probobition--low': this.explanationService.isLow(prob),
+            'probobition--middle': this.explanationService.isMiddle(prob),
+            'probobition--high': this.explanationService.isHigh(prob),
+            'probobition--very-high': this.explanationService.isVeryHigh(prob),
+          };
 
           this.loading = false;
         },

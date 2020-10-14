@@ -4,9 +4,11 @@ import { BaseInferenceRule } from '../base-inference-rule';
 import { Rule } from 'src/electron/interfaces/Rule';
 import { map } from 'src/angular/app/utils/interfaces/map';
 
+const criterionId = 'Time-Lymphocytosis-Age';
+
 export class TimeLymphocytosisAge extends BaseInferenceRule {
     toString(): string {
-        return 'Time-Lymphocytosis-Age';
+        return criterionId;
     }
 
     protected async getMathcher(rulesDb: any, rule: Rule): Promise<map<any>> {
@@ -31,5 +33,9 @@ export class TimeLymphocytosisAge extends BaseInferenceRule {
             t: rule.t,
             'oak.lf': inRange ? lfMatch : NaN,
         };
+    }
+
+    static id(): string {
+        return criterionId;
     }
 }

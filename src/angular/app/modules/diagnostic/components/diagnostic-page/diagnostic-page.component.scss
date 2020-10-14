@@ -22,3 +22,21 @@
 
     @include page-width();
 }
+
+.probobition {
+    &--low {
+        color: red;
+    }
+
+    &--middle {
+        color: orange;
+    }
+
+    &--high {
+        color: green;
+    }
+
+    &--very-high {
+        color: teal;
+    }
+}

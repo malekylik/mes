@@ -15,6 +15,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 
 import { AmountComponent } from './components/amount/amount.component';
 import { IndeterminateProgressSpinnerComponent } from './components/indeterminate-progress-spinner/indeterminate-progress-spinner.component';
@@ -55,6 +56,7 @@ import { ArrayToStringPipe } from './pipes/array-to-string/array-to-string.pipe'
     MatExpansionModule,
     MatSortModule,
     MatTableModule,
+    MatCardModule,
   ],
   declarations: [
     AmountComponent,
