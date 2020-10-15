@@ -21,6 +21,11 @@
 <div class="diagnostic-info" *ngIf="diagnosticInfo">
   <app-diagnostic-info [diagnosticInfo]="diagnosticInfo" [general]="general"></app-diagnostic-info>
 </div>
-<mat-card class="diagnostic-info" *ngIf="probStr">
-  Шанс диагноза: <span [ngClass]="currentClasses">{{probStr}}</span>
+<mat-card class="diagnostic-info" *ngIf="probStr && general.length > 0">
+  <p>
+    Шанс диагноза: <span [ngClass]="currentClasses">{{probStr}}</span>
+  </p>
+  <p>
+    Диагноз: {{general[0].diagnosis}}
+  </p>
 </mat-card>

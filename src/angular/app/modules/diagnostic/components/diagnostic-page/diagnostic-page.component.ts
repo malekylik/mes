@@ -96,6 +96,9 @@ export class DiagnosticPageComponent implements OnInit {
             'probobition--very-high': this.explanationService.isVeryHigh(prob),
           };
 
+          console.log('result', result);
+          console.log('d', d);
+
           this.loading = false;
         },
         () => {
