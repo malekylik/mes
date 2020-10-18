@@ -1,7 +1,7 @@
 <app-header title="Диагностика:"></app-header>
 <div class="diagnostic-page">
   <form class="diagnostic-page__diagnostic" [formGroup]="diagnosticFormGroup" (ngSubmit)="onDiagnost()">
-    <app-diagnostic 
+    <app-diagnostic
     [form]="diagnosticFormGroup"
     [ages]="ages"
     [Ts]="Ts"
@@ -13,6 +13,8 @@
       <button [disabled]="loading" mat-raised-button class="controls__save-button" color="primary" type="submit">
         <span *appLoading="!loading; color: 'accent'">Диагностирование</span>
       </button>
+
+      <app-file-loading accept=".csv" text="Загрузить данные" [loading]="loading" (change)="onLoadData($event)"></app-file-loading>
     </div>
   </form>
 </div>

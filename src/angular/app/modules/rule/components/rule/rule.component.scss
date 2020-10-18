@@ -9,6 +9,7 @@
 
 .controls {
     display: flex;
+    justify-content: space-between;
 
     &__save-button {
         margin-right: 10px;

@@ -13,6 +13,7 @@ import { map } from 'src/angular/app/utils/interfaces/map';
 import { DiagnosisInfo } from 'src/electron/interfaces/DiagnosisInfo';
 import { GeneralDiagnosisInfo } from 'src/electron/interfaces/GeneralDiagnosisInfo';
 import { SOMETHING_WENT_WRONG } from 'src/angular/app/constants';
+import { parseCSVToRule } from 'src/angular/app/utils/csv/utils';
 
 @Component({
   selector: 'app-diagnostic-page',
@@ -76,6 +77,34 @@ export class DiagnosticPageComponent implements OnInit {
           this.infoMessageService.showMessage(SOMETHING_WENT_WRONG);
         }
       );
+    }
+  }
+
+  onLoadData(files: FileList) {
+    if (files.length > 0) {
+      const file = files.item(0);
+
+      const reader = new FileReader();
+      reader.onload = (e) => { 
+        const fileStr = e.target.result as string;
+        const rule = parseCSVToRule(fileStr);
+
+        this.diagnosticFormGroup.setValue({
+          [RuleFormFields.diagnostic]: {
+            [DiagnosticFormFields.age]: rule.age, 
+            [DiagnosticFormFields.T]: rule.T,
+            [DiagnosticFormFields.sex]: rule.sex,
+            [DiagnosticFormFields.time]: rule.t,
+            [DiagnosticFormFields.vomiting]: rule.vomiting,
+            [DiagnosticFormFields.oak]: {
+              [OAKFormFields.leukocytosis]: rule.oak.L,
+              [OAKFormFields.neutrophilia]: rule.oak.nf,
+              [OAKFormFields.lymphocytosis]: rule.oak.lf,
+            }
+          }
+        });
+      };
+      reader.readAsText(file);
     }
   }
 

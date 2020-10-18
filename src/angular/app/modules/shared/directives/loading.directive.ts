@@ -6,15 +6,17 @@ import {
   TemplateRef,
   ComponentFactory,
   ComponentRef,
-  OnInit,
+  AfterContentInit,
 } from '@angular/core';
 
 import { IndeterminateProgressSpinnerComponent } from '../components/indeterminate-progress-spinner/indeterminate-progress-spinner.component';
 
+const DEFAULT_DIAMETER = 100;
+
 @Directive({
   selector: '[appLoading]'
 })
-export class LoadingDirective implements OnInit {
+export class LoadingDirective implements AfterContentInit {
 
   @Input('appLoadingDiameter') diameter: number;
   @Input('appLoadingColor') color: string = 'primary';
@@ -29,7 +31,7 @@ export class LoadingDirective implements OnInit {
         componentRef.location.nativeElement.firstElementChild.style.width = `${this.width}px`;
       }
 
-      componentRef.instance.diameter = this.diameter;
+      componentRef.instance.diameter = this.diameter ?? DEFAULT_DIAMETER;
       componentRef.instance.color = this.color;
     } else {
       this.vc.createEmbeddedView(this.templateRef);
@@ -47,7 +49,7 @@ export class LoadingDirective implements OnInit {
     this.loadingFactory = this.resolver.resolveComponentFactory(IndeterminateProgressSpinnerComponent);
   }
 
-  ngOnInit() {
+  ngAfterContentInit() {
     if (!this.diameter) {
       const ref = this.vc.element.nativeElement.parentElement.offsetParent;
 

@@ -1,0 +1,12 @@
+<button [disabled]="loading" mat-raised-button class="file-loading__load-data-button" type="button">
+  <span *appLoading="!loading; color: 'accent'">{{text}}</span>
+  <label for="file" class="file-loading__file-label"></label>
+</button>
+
+<input
+  id="file"
+  class="file-loading__file-input"
+  type="file"
+  (change)="onChange($event.target.files)"
+  [accept]="accept"
+/>

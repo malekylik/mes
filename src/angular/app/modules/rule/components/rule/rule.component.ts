@@ -6,6 +6,7 @@ import { BaseRule } from 'src/electron/interfaces/BaseRule';
 import { Range } from 'src/angular/app/utils/range';
 import { FormOption } from 'src/angular/app/utils/interfaces/form-option';
 import { RuleFormFields, DiagnosticFormFields, OAKFormFields} from '../../constants';
+import { parseCSVToRule } from 'src/angular/app/utils/csv/utils';
 
 @Component({
   selector: 'app-rule',
@@ -51,6 +52,36 @@ export class RuleComponent implements OnInit {
       );
 
       this.save.emit(rule);
+    }
+  }
+
+  onLoadData(files: FileList) {
+    if (files.length > 0) {
+    const file = files.item(0);
+
+      const reader = new FileReader();
+      reader.onload = (e) => { 
+        const fileStr = e.target.result as string;
+        const rule = parseCSVToRule(fileStr);
+
+        this.ruleFormGroup.setValue({
+          [RuleFormFields.name]: rule.name,
+          [RuleFormFields.diagnostic]: {
+            [DiagnosticFormFields.age]: rule.age, 
+            [DiagnosticFormFields.T]: rule.T,
+            [DiagnosticFormFields.sex]: rule.sex,
+            [DiagnosticFormFields.time]: rule.t,
+            [DiagnosticFormFields.vomiting]: rule.vomiting,
+            [DiagnosticFormFields.oak]: {
+              [OAKFormFields.leukocytosis]: rule.oak.L,
+              [OAKFormFields.neutrophilia]: rule.oak.nf,
+              [OAKFormFields.lymphocytosis]: rule.oak.lf,
+            },
+          },
+          [RuleFormFields.diagnosis]: rule.diagnosis,
+        });
+      };
+      reader.readAsText(file);
     }
   }
 

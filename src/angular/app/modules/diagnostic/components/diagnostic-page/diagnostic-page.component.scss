@@ -8,7 +8,13 @@
 }
 
 .controls {
+    display: flex;
+    justify-content: space-between;
     margin-top: 10px;
+
+    &__save-button {
+        margin-right: 8px;
+    }
 }
 
 .diagnostic-info {
