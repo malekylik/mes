@@ -18,9 +18,10 @@ import { MatTableModule } from '@angular/material/table';
 
 import { AmountComponent } from './components/amount/amount.component';
 import { IndeterminateProgressSpinnerComponent } from './components/indeterminate-progress-spinner/indeterminate-progress-spinner.component';
-import { LoadingDirective } from './directives/loading.directive';
 import { TabNavComponent } from './components/tab-nav/tab-nav.component';
 import { HeaderComponent } from './components/header/header.component';
+import { FileLoadingComponent } from './components/file-loading/file-loading.component';
+import { LoadingDirective } from './directives/loading.directive';
 import { ArrayToStringPipe } from './pipes/array-to-string/array-to-string.pipe';
 
 @NgModule({
@@ -36,6 +37,7 @@ import { ArrayToStringPipe } from './pipes/array-to-string/array-to-string.pipe'
     IndeterminateProgressSpinnerComponent,
     HeaderComponent,
     TabNavComponent,
+    FileLoadingComponent,
     LoadingDirective,
     ArrayToStringPipe,
     BrowserAnimationsModule,
@@ -57,9 +59,10 @@ import { ArrayToStringPipe } from './pipes/array-to-string/array-to-string.pipe'
   declarations: [
     AmountComponent,
     IndeterminateProgressSpinnerComponent,
-    LoadingDirective,
     TabNavComponent,
     HeaderComponent,
+    FileLoadingComponent,
+    LoadingDirective,
     ArrayToStringPipe,
   ],
   entryComponents: [IndeterminateProgressSpinnerComponent],

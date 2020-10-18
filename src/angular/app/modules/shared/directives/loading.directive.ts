@@ -6,7 +6,7 @@ import {
   TemplateRef,
   ComponentFactory,
   ComponentRef,
-  OnInit,
+  AfterContentInit,
 } from '@angular/core';
 
 import { IndeterminateProgressSpinnerComponent } from '../components/indeterminate-progress-spinner/indeterminate-progress-spinner.component';
@@ -14,7 +14,7 @@ import { IndeterminateProgressSpinnerComponent } from '../components/indetermina
 @Directive({
   selector: '[appLoading]'
 })
-export class LoadingDirective implements OnInit {
+export class LoadingDirective implements AfterContentInit {
 
   @Input('appLoadingDiameter') diameter: number;
   @Input('appLoadingColor') color: string = 'primary';
@@ -47,7 +47,7 @@ export class LoadingDirective implements OnInit {
     this.loadingFactory = this.resolver.resolveComponentFactory(IndeterminateProgressSpinnerComponent);
   }
 
-  ngOnInit() {
+  ngAfterContentInit() {
     if (!this.diameter) {
       const ref = this.vc.element.nativeElement.parentElement.offsetParent;
 

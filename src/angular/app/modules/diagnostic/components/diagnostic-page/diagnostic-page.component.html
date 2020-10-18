@@ -13,18 +13,8 @@
       <button [disabled]="loading" mat-raised-button class="controls__save-button" color="primary" type="submit">
         <span *appLoading="!loading; color: 'accent'">Диагностирование</span>
       </button>
-      <button [disabled]="loading" mat-raised-button class="controls__load-data-button" type="button">
-        <span *appLoading="!loading; color: 'accent'">Загрузить данные</span>
-        <label for="file" class="controls__file-label"></label>
-      </button>
 
-      <input
-        id="file"
-        class="controls__file-input"
-        type="file"
-        (change)="onLoadData($event.target.files)"
-        accept=".csv"
-      />
+      <app-file-loading accept=".csv" text="Загрузить данные" [loading]="loading" (change)="onLoadData($event)"></app-file-loading>
     </div>
   </form>
 </div>
