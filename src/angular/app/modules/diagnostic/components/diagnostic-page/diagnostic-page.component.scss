@@ -8,6 +8,8 @@
 }
 
 .controls {
+    display: flex;
+    justify-content: space-between;
     margin-top: 10px;
 
     &__save-button {

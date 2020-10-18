@@ -11,6 +11,8 @@ import {
 
 import { IndeterminateProgressSpinnerComponent } from '../components/indeterminate-progress-spinner/indeterminate-progress-spinner.component';
 
+const DEFAULT_DIAMETER = 100;
+
 @Directive({
   selector: '[appLoading]'
 })
@@ -29,7 +31,7 @@ export class LoadingDirective implements AfterContentInit {
         componentRef.location.nativeElement.firstElementChild.style.width = `${this.width}px`;
       }
 
-      componentRef.instance.diameter = this.diameter;
+      componentRef.instance.diameter = this.diameter ?? DEFAULT_DIAMETER;
       componentRef.instance.color = this.color;
     } else {
       this.vc.createEmbeddedView(this.templateRef);
